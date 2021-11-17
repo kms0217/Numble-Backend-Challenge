@@ -1,1 +1,74 @@
+spring:
+  profiles:
+    group:
+      dev: dev, common
 
+---
+
+spring:
+  profiles:
+    group:
+      prod: prod, common
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "common"
+    thymeleaf:
+      prefix: classpath:/templates/
+      cache: false
+      check-template-location: true
+      suffix: .html
+
+server:
+  port: 9091
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/numble
+    username: root
+    password: 1234
+
+logging:
+  level:
+    org.springframework.web: trace
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://numble.c2ejxfeifgj5.ap-northeast-2.rds.amazonaws.com:3306/numble?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Seoul
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+logging:
+  level:
+    org.springframework.web: trace
