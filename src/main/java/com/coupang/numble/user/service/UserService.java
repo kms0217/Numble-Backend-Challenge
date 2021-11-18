@@ -27,6 +27,7 @@ public class UserService {
         User user = modelMapper.map(signUpDto, User.class);
         Authority baseAuth = new Authority();
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        baseAuth.setUser(user);
         baseAuth.setAuthority("ROLE_COMMON_USER");
         user.getAuthorities().add(baseAuth);
         repository.save(user);

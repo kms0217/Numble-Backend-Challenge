@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @NoArgsConstructor
@@ -24,6 +26,7 @@ public class User extends Base {
     private Long id;
 
     @OneToMany(mappedBy = "user")
+    @Cascade(CascadeType.ALL)
     private Set<Authority> authorities = new HashSet<>();
 
     @Column(nullable = false, unique = true)
