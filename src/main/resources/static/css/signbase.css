@@ -18,7 +18,7 @@
 
 .logo {
   margin-top: 30px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   margin-right: auto;
   max-width: 200px;
 }
@@ -29,24 +29,6 @@
   border: none;
   padding: 20px;
   text-align: center;
-}
-
-.line-text {
-  display: flex;
-  flex-basis: 100%;
-  align-items: center;
-  color: rgba(0, 0, 0, 0.35);
-  font-size: 12px;
-}
-.line-text::before,
-.line-text::after {
-  content: "";
-  flex-grow: 1;
-  background: rgba(0, 0, 0, 0.35);
-  height: 1px;
-  font-size: 0px;
-  line-height: 0px;
-  margin: 0px 16px;
 }
 
 #sign-bottom-box {
@@ -81,12 +63,18 @@
 }
 
 .sign-up-button {
-  background-color: white;
+  background-color: #0074e9;
   height: 48px;
-  color: #0074e9;
+  color: #fff;
   border: 1px solid #ccc;
 }
 
 .sign-in-button:active {
   background-color: #00aeff;
+}
+
+.error-message {
+  text-align: center;
+  color: red;
+  font-size: 10px;
 }

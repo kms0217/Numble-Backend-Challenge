@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Coupang</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/signbase.css">
+  <link rel="stylesheet" href="/css/signup.css">
+</head>
+<body>
+<main id="signup-form">
+  <div class="sign-wrapper">
+    <div class="sign-box">
+      <img class="logo" src="/image/logo.png" onclick="location.href='/'">
+      <div>회원정보를 입력해주세요</div>
+      <form method="post" action="/signup" th:object="${user}">
+        <input class="sign-input form-control"
+               name="email"
+               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+               type="text"
+               placeholder="아이디(이메일)"
+               required
+        >
+        <div class="error-message" th:if="${#fields.hasErrors('email')}">
+          <span th:each="err : ${#fields.errors('email')}" th:text="${err}"></span>
+        </div>
+        <input class="sign-input form-control"
+               name="password"
+               type="password"
+               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+               placeholder="비밀번호"
+               required
+        >
+        <div class="error-message" th:if="${#fields.hasErrors('password')}">
+          <span th:each="err : ${#fields.errors('password')}" th:text="${err}"></span>
+        </div>
+        <input class="sign-input form-control"
+               name="passwordCheck"
+               th:classappend="${#fields.hasErrors('passwordCheck')} ? 'is-invalid'"
+               type="password"
+               placeholder="비밀번호 확인"
+               required
+        >
+        <div class="error-message" th:if="${#fields.hasErrors('passwordCheck')}">
+          <span th:each="err : ${#fields.errors('passwordCheck')}" th:text="${err}"></span>
+        </div>
+        <input class="sign-input form-control"
+               name="username"
+               type="text"
+               th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'"
+               placeholder="이름"
+               required
+        >
+        <div class="error-message" th:if="${#fields.hasErrors('username')}">
+          <span th:each="err : ${#fields.errors('username')}" th:text="${err}"></span>
+        </div>
+        <input class="sign-input form-control"
+               name="phoneNumber"
+               type="text"
+               th:classappend="${#fields.hasErrors('phoneNumber')} ? 'is-invalid'"
+               placeholder="휴대폰 번호"
+               required
+        >
+        <div class="error-message" th:if="${#fields.hasErrors('phoneNumber')}">
+          <span th:each="err : ${#fields.errors('phoneNumber')}" th:text="${err}"></span>
+        </div>
+        <button class="sign-up-button" type="submit">가입</button>
+      </form>
+    </div>
+  </div>
+</main>
+</body>
+</html>
