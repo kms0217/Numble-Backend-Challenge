@@ -1,0 +1,164 @@
+.nav-bar {
+  min-width: 1020px;
+  background-color: white;
+}
+
+.nav-top {
+  position: absolute;
+  height: 32px;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: #f0f0f0;
+  z-index: 3;
+}
+
+.nav-bottom {
+  position: relative;
+  width: 980px;
+  height: 115px;
+  margin: 0 auto;
+  padding-top: 32px;
+}
+
+.nav-menu {
+  position: absolute;
+  width: 880px;
+  height: 91px;
+  margin: 25px 0 0 140px;
+  display: block;
+}
+
+.category-btn {
+  position: absolute;
+  width: 110px;
+  height: 115px;
+  top: 32px;
+  left: 0;
+  margin-right: 30px;
+  background-position: 0 0;
+  text-align: center;
+}
+
+.nav-menu-top {
+  position: relative;
+  z-index: 3;
+  display: block;
+}
+
+.nav-menu-bottom {
+  position: relative;
+  width: auto;
+  min-width: 980px;
+  left: 0;
+  z-index: 0;
+  display: block;
+}
+
+.nav-logo {
+  width: 174px;
+  height: 41px;
+  margin: 2px 20px 0 0;
+  float: left;
+}
+
+.search-container {
+  position: relative;
+  z-index: 3;
+  width: 484px;
+  float: left;
+  margin-left: 0;
+  height: 39px;
+  margin-right: 22px;
+  border: 2px solid #4285f4;
+  box-sizing: content-box;
+}
+
+#nav-search {
+  padding-right: 23px;
+  width: 434px;
+  height: 37px;
+  color: #262626;
+  position: absolute;
+  top: 0;
+  margin: 0;
+  border: 0;
+  text-indent: 10px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: content-box;
+}
+
+#nav-search-icon {
+  position: absolute;
+  right: 0;
+  width: 50px;
+  top: 25%;
+  text-align: center;
+}
+
+.nav-top-menu {
+  float: right;
+  position: relative;
+  z-index: 10;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.nav-top-menu li {
+  height: 26px;
+  position: relative;
+  padding-top: 10px;
+  float: left;
+  list-style: none;
+  font-size: 11px;
+  padding-right: 12px;
+}
+
+.nav-top-menu li a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-logout-btn {
+  margin: 0;
+  color: #888;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  padding: 2px;
+}
+
+.nav-mycoupang-icon, .nav-cart-icon {
+  width: 29px;
+  height: 31px;
+  display: block;
+  margin: 0 auto;
+}
+
+.nav-cart-icon {
+  margin-left: 4px !important;
+}
+
+.nav-icon-title {
+  width: 50px;
+  display: block;
+  padding-top: 7px;
+  text-align: center;
+  white-space: nowrap;
+  color: black;
+  font-size: 12px;
+}
+
+.nav-icon {
+  margin-top: 3px;
+  display: block;
+}
+
+.nav-mycoupang, .nav-cart {
+  position: relative;
+  margin-right: 20px;
+  width: 50px;
+  height: 52px;
+  float: left;
+}
