@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Coupang</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/signbase.css">
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<main id="login-form">
+  <div class="sign-wrapper">
+    <div class="sign-box">
+      <form method="post" action="/login" style="min-width: 100%">
+        <img class="logo" src="/image/logo.png" onclick="location.href='/'">
+        <input class="sign-input"
+               name="username"
+               type="text"
+               placeholder="email"
+               required>
+        <input class="sign-input"
+               name="password"
+               type="password"
+               placeholder="비밀번호"
+               required>
+        <button type="submit" class="sign-in-button">로그인</button>
+      </form>
+      <hr>
+      <button onclick="location.href='/signup'" class="sign-up-button">회원가입</button>
+    </div>
+  </div>
+</main>
+</body>
+</html>

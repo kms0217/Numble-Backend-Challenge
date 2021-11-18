@@ -1,0 +1,11 @@
+input:focus {
+  outline:none;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+}
+
+#login-form .error-message {
+  margin-top: 1em;
+  text-align: center;
+  color: red;
+}
