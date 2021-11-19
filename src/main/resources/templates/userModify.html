@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Coupang</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+        crossorigin="anonymous"/>
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/css/mycoupang.css">
+  <link rel="stylesheet" href="/css/nav.css">
+</head>
+<body>
+<div th:replace="nav.html :: fragment-nav()"></div>
+<div class="content-container">
+    <div class="content-container">
+      <h1>회원정보확인</h1>
+      <p th:text="${user.getEmail()} + '님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인 합니다.'"></p>
+      <table>
+        <tbody>
+        <tr>
+          <th scope="row">아이디(이메일)</th>
+          <td>user1.com</td>
+        </tr>
+        <tr>
+          <th scope="row">비밀번호</th>
+          <td><input id="confirmPassword" type="password"></td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="error-message" id="confirmPasswordError">잘못된 비밀번호 입니다.</div>
+      <button id="confirmPasswordBtn" style="border: none; background-color: #00aeff; color: white;" onclick="confirmPassword()">확인</button>
+    </div>
+</div>
+<script src="js/userModify.js"></script>
+</body>
+</html>
