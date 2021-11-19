@@ -6,6 +6,7 @@ import com.coupang.numble.user.dto.UserReqDto;
 import com.coupang.numble.user.entity.Authority;
 import com.coupang.numble.user.entity.User;
 import com.coupang.numble.user.repository.UserRepository;
+import javax.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -65,5 +66,10 @@ public class UserService {
         user.setPassword(new BCryptPasswordEncoder().encode(dto.getNewPassword()));
         repository.save(user);
         principal.setUser(user);
+    }
+
+    public void deleteUser(Principal principal, HttpSession session) {
+        repository.deleteById(principal.getUser().getId());
+        session.invalidate();
     }
 }

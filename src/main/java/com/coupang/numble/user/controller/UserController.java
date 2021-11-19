@@ -5,19 +5,14 @@ import com.coupang.numble.user.dto.PasswordChangeDto;
 import com.coupang.numble.user.dto.UserReqDto;
 import com.coupang.numble.user.service.UserService;
 import com.coupang.numble.user.validator.SignUpValidator;
-import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,22 +27,6 @@ public class UserController {
         SignUpValidator validator) {
         this.userService = userService;
         this.validator = validator;
-    }
-
-    @GetMapping("/signup")
-    public String signupFrom(Model model) {
-        model.addAttribute("user", new UserReqDto());
-        return "signup";
-    }
-
-    @PostMapping("/signup")
-    public String signup(@ModelAttribute("user") @Valid UserReqDto userDto, BindingResult bindingResult) {
-        validator.validate(userDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "signup";
-        }
-        userService.createUser(userDto);
-        return "redirect:/";
     }
 
     @GetMapping("/userModify")
@@ -99,6 +78,13 @@ public class UserController {
         if (dto.getNewPassword() == null || dto.getNewPassword().equals(dto.getNewPasswordConfirm()))
             throw new RuntimeException();
         userService.changePassword(principal, dto);
+        return HttpStatus.NO_CONTENT;
+    }
+
+    @DeleteMapping("/user/me")
+    @ResponseBody
+    public HttpStatus deleteUser(@AuthenticationPrincipal Principal principal, HttpSession session) {
+        userService.deleteUser(principal, session);
         return HttpStatus.NO_CONTENT;
     }
 }

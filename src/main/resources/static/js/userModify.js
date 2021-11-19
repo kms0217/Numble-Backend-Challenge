@@ -50,7 +50,9 @@ function renderUserModifyView(user) {
     <td><button type="button" onclick="changePassword()">비밀번호 변경</button>
     <span class="error-message" id="passwordError">비밀번호 변경 실패</span>
     <span class="success-message" id="passwordSuccess">비밀번호 변경 성공</span></td></tr></tbody></table>
-    </div></td></tr></tbody></table></div></div>`;
+    </div></td></tr></tbody></table></div>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#secessionModal">탈퇴</button>
+    </div>`;
   $(el).append(view);
 }
 
@@ -100,4 +102,17 @@ function changePassword() {
   $("#originPassword").val("");
   $("#newPassword").val("");
   $("#newPasswordConfirm").val("");
+}
+
+function secession() {
+  $.ajax({
+    type: "delete",
+    url: "/user/me",
+    success: data => {
+      location.href = "/";
+    },
+    error: data => {
+
+    }
+  })
 }
