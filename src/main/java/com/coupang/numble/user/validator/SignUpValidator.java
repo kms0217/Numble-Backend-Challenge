@@ -1,6 +1,6 @@
 package com.coupang.numble.user.validator;
 
-import com.coupang.numble.user.dto.UserDto;
+import com.coupang.numble.user.dto.UserReqDto;
 import com.coupang.numble.user.service.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -17,12 +17,12 @@ public class SignUpValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return UserDto.class.equals(clazz);
+        return UserReqDto.class.equals(clazz);
     }
 
     @Override
     public void validate(Object obj, Errors errors) {
-        UserDto target = (UserDto) obj;
+        UserReqDto target = (UserReqDto) obj;
         if (target.getPassword() == null ||
             !target.getPassword().equals(target.getPasswordCheck())) {
             errors.rejectValue("passwordCheck", "key", "비밀번호가 일치하지 않습니다.");

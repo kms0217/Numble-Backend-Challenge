@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserDto {
+public class UserReqDto {
 
     @Email(message = "Email형식이 올바르지 않습니다.")
     @NotBlank(message = "Email을 입력해주세요.")
@@ -26,5 +26,5 @@ public class UserDto {
     @NotBlank(message = "핸드폰 번호를 입력해주세요.")
     private String phoneNumber;
 
-    private Boolean check;
+    private Boolean rocketWowMembership;
 }
