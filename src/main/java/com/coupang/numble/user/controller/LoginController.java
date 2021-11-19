@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,12 +18,6 @@ public class LoginController {
     @GetMapping("/login")
     public String loginFrom() {
         return "login";
-    }
-
-    @GetMapping("/signup")
-    public String signupFrom(Model model) {
-        model.addAttribute("user", new UserReqDto());
-        return "signup";
     }
 
     @PostMapping("/login/confirmPassword")

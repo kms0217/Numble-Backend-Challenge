@@ -13,7 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +34,14 @@ public class UserController {
         this.validator = validator;
     }
 
+    @GetMapping("/signup")
+    public String signupFrom(Model model) {
+        model.addAttribute("user", new UserReqDto());
+        return "signup";
+    }
+
     @PostMapping("/signup")
-    public String signup(@Valid UserReqDto userDto, BindingResult bindingResult) {
+    public String signup(@ModelAttribute("user") @Valid UserReqDto userDto, BindingResult bindingResult) {
         validator.validate(userDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "signup";
@@ -65,9 +74,6 @@ public class UserController {
         @AuthenticationPrincipal Principal principal,
         @RequestBody UserReqDto dto
     ) {
-        System.out.println(dto.getPhoneNumber());
-        System.out.println(dto.getPhoneNumber());
-        System.out.println(dto.getPhoneNumber());
         userService.changePhoneNumber(principal, dto.getPhoneNumber());
         return HttpStatus.NO_CONTENT;
     }

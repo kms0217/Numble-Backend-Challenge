@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>Coupang</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/signbase.css">
   <link rel="stylesheet" href="/css/signup.css">
 </head>
@@ -13,7 +15,7 @@
     <div class="sign-box">
       <img class="logo" src="/image/logo.png" onclick="location.href='/'">
       <div>회원정보를 입력해주세요</div>
-      <form method="post" action="/signup" th:object="${user}">
+      <form method="post" th:action="@{/signup}" th:object="${user}" novalidate>
         <input class="sign-input form-control"
                name="email"
                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
@@ -21,9 +23,8 @@
                placeholder="아이디(이메일)"
                required
         >
-        <div class="error-message" th:if="${#fields.hasErrors('email')}">
-          <span th:each="err : ${#fields.errors('email')}" th:text="${err}"></span>
-        </div>
+        <p class="error-message" th:if="${#fields.hasErrors('email')}" th:errorclass="error"
+           th:errors="*{email}"/>
         <input class="sign-input form-control"
                name="password"
                type="password"
@@ -31,9 +32,8 @@
                placeholder="비밀번호"
                required
         >
-        <div class="error-message" th:if="${#fields.hasErrors('password')}">
-          <span th:each="err : ${#fields.errors('password')}" th:text="${err}"></span>
-        </div>
+        <p class="error-message" th:if="${#fields.hasErrors('password')}" th:errorclass="error"
+           th:errors="*{password}"/>
         <input class="sign-input form-control"
                name="passwordCheck"
                th:classappend="${#fields.hasErrors('passwordCheck')} ? 'is-invalid'"
@@ -41,9 +41,8 @@
                placeholder="비밀번호 확인"
                required
         >
-        <div class="error-message" th:if="${#fields.hasErrors('passwordCheck')}">
-          <span th:each="err : ${#fields.errors('passwordCheck')}" th:text="${err}"></span>
-        </div>
+        <p class="error-message" th:if="${#fields.hasErrors('passwordCheck')}" th:errorclass="error"
+           th:errors="*{passwordCheck}"/>
         <input class="sign-input form-control"
                name="username"
                type="text"
@@ -51,9 +50,8 @@
                placeholder="이름"
                required
         >
-        <div class="error-message" th:if="${#fields.hasErrors('username')}">
-          <span th:each="err : ${#fields.errors('username')}" th:text="${err}"></span>
-        </div>
+        <p class="error-message" th:if="${#fields.hasErrors('username')}" th:errorclass="error"
+           th:errors="*{username}"/>
         <input class="sign-input form-control"
                name="phoneNumber"
                type="text"
@@ -61,9 +59,8 @@
                placeholder="휴대폰 번호"
                required
         >
-        <div class="error-message" th:if="${#fields.hasErrors('phoneNumber')}">
-          <span th:each="err : ${#fields.errors('phoneNumber')}" th:text="${err}"></span>
-        </div>
+        <p class="error-message" th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error"
+           th:errors="*{phoneNumber}"/>
         <button class="sign-up-button" type="submit">가입</button>
       </form>
     </div>
