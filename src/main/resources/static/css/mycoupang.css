@@ -1,0 +1,50 @@
+.content-container {
+  z-index: inherit !important;
+  width: 980px;
+  margin: 0 auto;
+  position: relative;
+  padding: 40px;
+  display: block;
+}
+
+.content {
+  position: relative;
+  min-height: 1000px;
+  color: black;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+}
+
+.side-content {
+  width: 150px;
+  float: left;
+  box-sizing: border-box;
+  display: block;
+  border: 1px solid #ccc;
+}
+
+.side-menu-box {
+  font-size: 14px;
+  line-height: 16px;
+  margin-top: 11px;
+  box-sizing: border-box;
+  padding-left: 10px;
+}
+
+.side-menu {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  display: none;
+  font-size: 10px;
+  color: red;
+}
+
+.success-message {
+  display: none;
+  font-size: 10px;
+  color: #0074e9;
+}

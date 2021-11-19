@@ -1,0 +1,16 @@
+html, body {
+  height: 100%;
+}
+
+.content {
+  margin: auto;
+  padding-top: 54px;
+  max-width: 935px;
+  align-content: center;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.content-container {
+  padding-top: 30px;
+}

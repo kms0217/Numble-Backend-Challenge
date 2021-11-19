@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Coupang</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/css/mycoupang.css">
+  <link rel="stylesheet" href="/css/nav.css">
+</head>
+<body>
+<div th:replace="nav.html :: fragment-nav()"></div>
+<div class="content-container">
+  <th:block th:switch="${mcPage}">
+    <th:block th:case="'membership'">
+      <div th:replace="mcWowMembershipTemplate.html :: fragment-mcWowMembership()"></div>
+    </th:block>
+    <th:block th:case="'coupon'">
+      <div th:replace="mcCouponTemplate.html :: fragment-mcCoupon()"></div>
+    </th:block>
+    <th:block th:case="'address'">
+      <div th:replace="mcAddressManageTemplate.html :: fragment-mcAddressManage()"></div>
+    </th:block>
+    <th:block th:case="*">
+      <div th:replace="mcOrderListTemplate.html :: fragment-mcOrderList()"></div>
+    </th:block>
+  </th:block>
+</div>
+</body>
+</html>
