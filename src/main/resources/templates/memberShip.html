@@ -27,7 +27,21 @@
         </div>
       </nav>
     </div>
+    <div class="main-content-container">
+      <div class="main-content">
+        <h1>로켓와우 멤버십 관리</h1>
+        <div th:if="${user.rocketMembership}">
+          <h3>현재 로켓 와우 회원입니다.</h3>
+          <button class="btn btn-danger" onclick="membershipToggle()">해제</button>
+        </div>
+        <div th:unless="${user.rocketMembership}">
+          <h3>현재 로켓 와우 회원아닙니다.</h3>
+          <button class="btn btn-primary" onclick="membershipToggle()">가입</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+<script src="/js/membership.js"></script>
 </body>
 </html>

@@ -3,7 +3,6 @@ package com.coupang.numble.common.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MyCoupangController {
@@ -17,12 +16,6 @@ public class MyCoupangController {
     public String mcOrderList(Model model) {
         model.addAttribute("mcPage", "orderList");
         return "orderList";
-    }
-
-    @GetMapping("/membership")
-    public String mcMembershipForm(Model model) {
-        model.addAttribute("mcPage", "membership");
-        return "memberShip";
     }
 
     @GetMapping("/coupon")

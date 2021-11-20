@@ -4,6 +4,7 @@ import com.coupang.numble.common.utils.ModelMapperUtils;
 import com.coupang.numble.user.auth.Principal;
 import com.coupang.numble.user.dto.PasswordChangeDto;
 import com.coupang.numble.user.dto.UserReqDto;
+import com.coupang.numble.user.dto.UserResDto;
 import com.coupang.numble.user.entity.Authority;
 import com.coupang.numble.user.entity.User;
 import com.coupang.numble.user.repository.UserRepository;
@@ -69,5 +70,14 @@ public class UserService {
     public void deleteUser(Principal principal, HttpSession session) {
         repository.deleteById(principal.getUser().getId());
         session.invalidate();
+    }
+
+    public UserResDto changeMembership(Principal principal) {
+        User user = repository.findById(principal.getUser().getId())
+            .orElseThrow(() -> new RuntimeException());
+        user.setRocketMembership(!user.isRocketMembership());
+        User saved = repository.save(user);
+        principal.setUser(user);
+        return UserResDto.of(saved);
     }
 }
