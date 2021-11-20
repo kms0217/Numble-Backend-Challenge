@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/address")
-public class MemberAddressPageController {
+public class MemberAddressController {
 
     private final MemberAddressService service;
 
-    public MemberAddressPageController(MemberAddressService service) {
+    public MemberAddressController(MemberAddressService service) {
         this.service = service;
     }
 
