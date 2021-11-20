@@ -39,4 +39,6 @@ public class User extends Base {
     private String password;
 
     private String phoneNumber;
+
+    private boolean rocketMembership;
 }

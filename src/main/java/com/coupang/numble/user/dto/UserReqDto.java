@@ -25,6 +25,4 @@ public class UserReqDto {
 
     @NotBlank(message = "핸드폰 번호를 입력해주세요.")
     private String phoneNumber;
-
-    private Boolean rocketWowMembership;
 }

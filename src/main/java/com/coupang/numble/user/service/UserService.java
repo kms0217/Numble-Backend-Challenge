@@ -1,5 +1,6 @@
 package com.coupang.numble.user.service;
 
+import com.coupang.numble.common.utils.ModelMapperUtils;
 import com.coupang.numble.user.auth.Principal;
 import com.coupang.numble.user.dto.PasswordChangeDto;
 import com.coupang.numble.user.dto.UserReqDto;
@@ -7,7 +8,6 @@ import com.coupang.numble.user.entity.Authority;
 import com.coupang.numble.user.entity.User;
 import com.coupang.numble.user.repository.UserRepository;
 import javax.servlet.http.HttpSession;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository repository;
-    private final ModelMapper modelMapper;
 
-    public UserService(UserRepository repository, ModelMapper modelMapper) {
+    public UserService(UserRepository repository) {
         this.repository = repository;
-        this.modelMapper = modelMapper;
     }
 
     public boolean emailDuplicate(String email) {
@@ -27,11 +25,11 @@ public class UserService {
     }
 
     public void createUser(UserReqDto signUpDto) {
-        User user = modelMapper.map(signUpDto, User.class);
+        User user = ModelMapperUtils.getModelMapper().map(signUpDto, User.class);
         Authority baseAuth = new Authority();
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         baseAuth.setUser(user);
-        baseAuth.setAuthority("ROLE_COMMON_USER");
+        baseAuth.setAuthority("ROLE_USER");
         user.getAuthorities().add(baseAuth);
         repository.save(user);
     }
