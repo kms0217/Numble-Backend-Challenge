@@ -1,5 +1,6 @@
 package com.coupang.numble.user.entity;
 
+import com.coupang.numble.common.entity.Base;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,7 +20,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Getter
 @NoArgsConstructor
-public class MemberAddress {
+public class MemberAddress extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
