@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<div th:fragment="fragment-addressEdit(user, address)">
+  <div class="main-content-container">
+    <div class="main-content">
+      <form class="html-editor-align-left" method="post" th:action="@{|/address/edit/${address.id}|}" th:object="${address}">
+        <input class="form-control"
+               name="receiverName"
+               type="text"
+               placeholder="받는사람"
+               required
+               th:value="${address.receiverName}"
+        >
+        <p class="validation-error" th:if="${#fields.hasErrors('receiverName')}" th:errorclass="error"
+           th:errors="*{receiverName}">받는 사람 이름을 입력해주세요.</p>
+        <input class="form-control"
+               name="address"
+               type="text"
+               placeholder="주소"
+               required
+               th:value="${address.address}"
+        >
+        <p class="validation-error" th:if="${#fields.hasErrors('address')}" th:errorclass="error"
+           th:errors="*{address}">주소를 입력해주세요.</p>
+        <input class="form-control"
+               name="telephone"
+               type="text"
+               placeholder="핸드폰 번호"
+               required
+               th:value="${address.telephone}"
+        >
+        <p class="validation-error" th:if="${#fields.hasErrors('telephone')}" th:errorclass="error"
+           th:errors="*{telephone}">핸드폰 번호를 입력해주세요.</p>
+        <div class="col-md-4">
+          <label class="col-form-label">배송 위치</label>
+          <select class="form-control" name="place">
+            <option th:each="place : ${T(com.coupang.numble.user.entity.MemberAddress.Place).values()}"
+                    th:value="${place.name()}"
+                    th:text="${place.name()}"
+                    th:selected="(${place.name()} == ${address.place.toString()})"
+            >
+            </option>
+          </select>
+        </div>
+        <label class="col-form-label">기본 배송지</label>
+        <input name="main"
+               type="checkbox"
+               th:checked="${address.main} == true"
+               >
+        <button class="btn btn-primary" type="submit">수정</button>
+      </form>
+    </div>
+  </div>
+</div>
+</html>

@@ -29,7 +29,7 @@ public class UserController {
         this.validator = validator;
     }
 
-    @GetMapping("/userModify")
+    @GetMapping("/user/modify")
     public String userModifyForm(@AuthenticationPrincipal Principal principal, Model model) {
         model.addAttribute("user", principal.getUser());
         return "userModify";

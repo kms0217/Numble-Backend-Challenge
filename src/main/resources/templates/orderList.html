@@ -15,20 +15,19 @@
 <body>
 <div th:replace="nav.html :: fragment-nav()"></div>
 <div class="content-container">
-  <th:block th:switch="${mcPage}">
-    <th:block th:case="'membership'">
-      <div th:replace="mcWowMembershipTemplate.html :: fragment-mcWowMembership()"></div>
-    </th:block>
-    <th:block th:case="'coupon'">
-      <div th:replace="mcCouponTemplate.html :: fragment-mcCoupon()"></div>
-    </th:block>
-    <th:block th:case="'address'">
-      <div th:replace="address.html :: fragment-mcAddressManage(${user}, ${addressList})"></div>
-    </th:block>
-    <th:block th:case="*">
-      <div th:replace="mcOrderListTemplate.html :: fragment-mcOrderList()"></div>
-    </th:block>
-  </th:block>
+  <div class="content">
+    <div class="side-content">
+      <nav>
+        <div class="side-menu-box">
+          <li class="side-menu" onclick="location.href='/order/list'" style="color: #0074e9">주문목록/배송조회</li>
+          <li class="side-menu" onclick="location.href='/membership'">와우 멤버십</li>
+          <li class="side-menu" onclick="location.href='/coupon'">할인 쿠폰</li>
+          <li class="side-menu" onclick="location.href='/address'">배송지 관리</li>
+          <li class="side-menu" onclick="location.href='/user/modify'">개인정보확인/수정</li>
+        </div>
+      </nav>
+    </div>
+  </div>
 </div>
 </body>
 </html>

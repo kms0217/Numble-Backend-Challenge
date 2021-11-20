@@ -22,6 +22,7 @@
   box-sizing: border-box;
   display: block;
   border: 1px solid #ccc;
+  min-height: 1000px;
 }
 
 .side-menu-box {
@@ -47,4 +48,33 @@
   display: none;
   font-size: 10px;
   color: #0074e9;
+}
+
+.main-content-container {
+  box-sizing: border-box;
+  display: block;
+  width: 750px;
+  float: right;
+  min-height: 1000px;
+}
+
+.main-content {
+  margin: 0 25px;
+  text-align: center;
+}
+
+.default-address {
+  font-size: 15px;
+}
+
+.rocket-wow {
+  font-size: 15px;
+  color: #00aeff;
+}
+
+.address {
+  border: 1px solid #ccc;
+  text-align: left;
+  margin-bottom: 10px;
+  padding-left: 10px;
 }

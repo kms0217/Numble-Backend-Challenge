@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Coupang</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/css/mycoupang.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/address.css">
+</head>
+<body>
+<div th:replace="nav.html :: fragment-nav()"></div>
+<div class="content-container">
+  <div class="content">
+    <div class="side-content">
+      <nav>
+        <div class="side-menu-box">
+          <li class="side-menu" onclick="location.href='/order/list'">주문목록/배송조회</li>
+          <li class="side-menu" onclick="location.href='/membership'">와우 멤버십</li>
+          <li class="side-menu" onclick="location.href='/coupon'">할인 쿠폰</li>
+          <li class="side-menu" onclick="location.href='/address'" style="color: #0074e9">배송지 관리</li>
+          <li class="side-menu" onclick="location.href='/user/modify'">개인정보확인/수정</li>
+        </div>
+      </nav>
+    </div>
+    <div class="main-content-container">
+      <th:block th:switch="${addressPage}">
+        <th:block th:case="'main'">
+          <div th:replace="addressMain.html :: fragment-addressMain(${user}, ${addressList})"></div>
+        </th:block>
+        <th:block th:case="'edit'">
+          <div th:replace="addressEdit.html :: fragment-addressEdit(${user}, ${address})"></div>
+        </th:block>
+        <th:block th:case="'add'">
+          <div th:replace="addressAdd.html :: fragment-addressAdd(${addressDto})"></div>
+        </th:block>
+      </th:block>
+    </div>
+
+
+<!--    <div class="main-content-container">-->
+<!--      <div class="main-content">-->
+<!--        <div class="addressList">-->
+<!--          <th:block th:each="address : ${addressList}">-->
+<!--            <div class="address">-->
+<!--              <p th:text="${user.username}"></p>-->
+<!--              <p>-->
+<!--                <span th:if="${address.main}" class="default-address">기본배송지</span>-->
+<!--                <span th:if="${user.rocketMembership}" class="rocket-wow">로켓와우가능</span>-->
+<!--              </p>-->
+<!--              <p th:text="${address.address}"></p>-->
+<!--              <p th:text="${address.telephone}"></p>-->
+<!--              <p th:text="${address.place}"></p>-->
+<!--              <button type="button" class="btn btn-primary"-->
+<!--                      th:onclick="'location.href = \'' + @{/address/edit/{addressId}(addressId=${address.id})} + '\''">수정</button>-->
+<!--            </div>-->
+<!--          </th:block>-->
+<!--        </div>-->
+<!--        <button class="btn btn-primary" th:onclick="'location.href = \'' + @{/address/add} + '\''">배송지 추가</button>-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+</div>
+</body>
+</html>
