@@ -15,12 +15,12 @@ public class MyCoupangController {
     @GetMapping("/order/list")
     public String mcOrderList(Model model) {
         model.addAttribute("mcPage", "orderList");
-        return "orderList";
+        return "mycoupang/order/orderList";
     }
 
     @GetMapping("/coupon")
     public String mcCouponForm(Model model) {
         model.addAttribute("mcPage", "coupon");
-        return "coupon";
+        return "mycoupang/coupon";
     }
 }

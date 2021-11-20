@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping("/user/modify")
     public String userModifyForm(@AuthenticationPrincipal Principal principal, Model model) {
         model.addAttribute("user", principal.getUser());
-        return "userModify";
+        return "mycoupang/userModify";
     }
 
     @PutMapping("/user/email")

@@ -23,13 +23,13 @@ public class MembershipController {
     @GetMapping
     public String membershipForm(@AuthenticationPrincipal Principal principal, Model model) {
         model.addAttribute("user", UserResDto.of(principal.getUser()));
-        return "memberShip";
+        return "mycoupang/membership";
     }
 
     @PostMapping
     public String membershipToggle(@AuthenticationPrincipal Principal principal, Model model) {
         UserResDto userResDto = service.changeMembership(principal);
         model.addAttribute("user", userResDto);
-        return "memberShip";
+        return "mycoupang/membership";
     }
 }
