@@ -1,5 +1,6 @@
 package com.coupang.numble.product.repository;
 
+import com.coupang.numble.product.entity.Category;
 import com.coupang.numble.product.entity.Product;
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +23,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT * FROM Product P WHERE P.company_id = ?1 and NOT P.id = ?2 LIMIT 4", nativeQuery = true)
     List<Product> findTop4ByCompanyIdAndNotId(Long companyId, Long productId);
+
+    @Query("SELECT COUNT(P) FROM Product P WHERE P.company.id = ?1")
+    int countAllByCompanyId(Long companyId);
+
+    @Query("SELECT COUNT(P) FROM Product P WHERE P.type in ?1")
+    int countAllByCategories(List<Category> childCategoryIdList);
 }

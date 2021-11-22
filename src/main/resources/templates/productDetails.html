@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Coupang</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="text/javascript"
+          src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div th:replace="nav.html :: fragment-nav(${user})"></div>
+<div class="content-container">
+  <div class="content">
+    <ul id="categoryTrack">
+      <li><a href="/">쿠팡 홈</a>&nbsp ></li>
+      <li th:each="idx : ${#numbers.sequence(0, categoryList.size() - 1)}">
+        <a th:href="@{/products/categories/{categoryId}(categoryId=${categoryList[idx].id})}" th:text="${categoryList[idx].name}"></a>
+        <th:block th:if="${idx != categoryList.size() - 1}">&nbsp ></th:block>
+      </li>
+    </ul>
+    <div class="product-details">
+      <div class="prod-image" data-global-banner-fold="">
+        <div>
+          <div class="prod-image-item">
+            <div th:each="thumbnail : ${product.thumbnailUrls}" class="prod-preview-image">
+              <img class="active-preview" th:src="${thumbnail.thumbnailUrl}">
+            </div>
+          </div>
+          <img class="prod-image-details" th:src="${product.thumbnailUrls[0].thumbnailUrl}">
+        </div>
+      </div>
+      <div class="prod-buy">
+        <p class="prod-title" th:text="${product.title}"
+           style="font-size: 18px; font-weight: bold; margin-bottom: 10px;"></p>
+        <span class="star" style="float: left;">별점 : 3/5</span>
+        <span class="review" style="color: #0074e9; float: left; margin-left: 20px;"><a>n개 상품평</a></span>
+        <br>
+        <div class="origin-price-info">
+          <span class="sale-rate">5%</span>
+          <span class="origin-price" id="origin-price" th:text="${product.price} + ' 원'" style="text-decoration: line-through"></span>
+        </div>
+        <div th:if="${!product.goldBox}">
+          <div class="price-div" type="general" th:text="${product.price * 0.95} + ' 원'"></div>
+        </div>
+        <div th:unless="${!product.goldBox}">
+          <div class="price-div" type = "general" th:if="${user == null || !user.rocketMembership}" th:text="${product.price * 0.95} + ' 원'"></div>
+          <span class="price-div" type = "rocket" th:if="${user != null && user.rocketMembership}" th:text="${product.price * 0.95 * 0.9} + ' 원'"></span>
+          <div th:if="${user != null && user.rocketMembership}" style="color: #0074e9; font-size: 8px; display: inline-block">와우 회원가(10% 추가할인)</div>
+        </div>
+        <div th:if="${product.rocketShipping}">
+          <div th:if="${user == null || !user.rocketMembership}">19,800원 이상 구매시 로켓배송 가능</div>
+          <div th:if="${user != null && user.rocketMembership}">로켓배송 가능</div>
+        </div>
+        <div th:unless="${product.rocketShipping}">
+          <div>무료배송(같은 판매자 상품 19,800원 이상 구매시) 그 외 배송비 : 3000원</div>
+          <div>택배사 : 한진 택배</div>
+        </div>
+        <div>판매자: <span th:text="${product.company.name}"></span> <a th:href="'/products/companies/' + ${product.company.id}" style="color: #0074e9">판매자 다른 상품 보러가기</a></div>
+        <div class="general-option" th:if="${product.clothesOptions.size() == 0}">
+          <span>option:</span>
+          <select class="form-control" name="option" id="optionSelect" onchange="optionChange()" style="width: 200px;">
+            <option th:each="option : ${product.optionSet}"
+                    th:text="${option.title} + ' : ' + ${option.price}"
+                    th:title = "${option.title}",
+                    th:price = "${option.price}"
+            >
+            </option>
+          </select>
+        </div>
+        <div class="clothes-option" th:unless="${product.clothesOptions.size() == 0}">
+          <div>
+            <span>size:</span>
+            <select class="form-control" name="size" style="width: 100px" id="clothSizeOption">
+              <option th:each="clothesOption : ${product.clothesOptions}"
+                      th:text="${clothesOption.size}"
+              >
+              </option>
+            </select>
+            <span>color:</span>
+            <select class="form-control" name="color" style="width: 100px" id="clothColorOption">
+              <option th:each="clothesOption : ${product.clothesOptions}"
+                      th:text="${clothesOption.color}"
+              >
+              </option>
+            </select>
+          </div>
+        </div>
+        <input type="number" value="1" style="width: 61px">
+        <button class="cart-btn btn btn-default" id="to-cart-btn" onclick="toCart()">장바구니 담기</button>
+        <button class="buy-btn btn btn-primary" id="to-buy-btn">구매하기</button>
+      </div>
+    </div>
+    <h2>같은 판매자 다른 상품</h2>
+    <div class="other-prod-company" style="display: flex">
+      <div class="company-product-container" th:if="${companyProducts != null}">
+        <th:block th:each="idx : ${#numbers.sequence(0, companyProducts.size() - 1)}">
+          <div class="company-product">
+            <a th:href="@{/products/{productId}(productId=${companyProducts[idx].id})}"></a>
+            <img th:src="${companyProducts[idx].thumbnailUrls[0].thumbnailUrl}" style="width: 100%">
+            <p th:text="${companyProducts[idx].title}"></p>
+          </div>
+        </th:block>
+      </div>
+      <div th:unless="${companyProducts != null}">
+        판매 상품이 없습니다.
+      </div>
+    </div>
+    <img class="details-page-url" th:src="${product.detailsPageUrl}">
+  </div>
+</div>
+<script src="/js/productDetails.js"></script>
+</body>
+</html>
