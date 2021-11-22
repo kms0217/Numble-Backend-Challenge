@@ -7,12 +7,14 @@ import com.coupang.numble.product.entity.Product;
 import com.coupang.numble.product.repository.ProductRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import javax.persistence.EntityManager;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class ProductService {
@@ -43,8 +45,9 @@ public class ProductService {
     }
 
     public List<Product> getCompanyProductLimit4(Long productId, Long companyId) {
-        return repository.find4ProductByCompanyIdAndNotId(companyId, productId);
+        return repository.findFirst4ByCompanyIdAndIdNot(companyId, productId);
     }
+    
 
     public Page<ProductDto> getCategoryProductPage(Long categoryId, Pageable pageable) {
         String sql = "SELECT DISTINCT P FROM Product P WHERE P.type in :param";
@@ -67,6 +70,23 @@ public class ProductService {
         return new PageImpl<>(productDtos, pageable, total);
     }
 
+    public Page<ProductDto> getProductPageBySearch(String keyword, boolean rocketFilter, Pageable pageable) {
+        String sql = "SELECT DISTINCT P FROM Product P WHERE P.title LIKE :param";
+        int total;
+        if (rocketFilter) {
+            sql += " AND rocketShipping";
+            total = repository.countAllByFilterWithRocket(keyword);
+        } else {
+            total = repository.countAllByFilter(keyword);
+        }
+        List<Product> products
+            = getProductPageFetchJoinThumbnailUrlsWithParam(pageable, sql, "%" + keyword + "%");
+        List<ProductDto> productDtos =
+            products.stream().map(ProductDto::of).collect(Collectors.toList());
+        return new PageImpl<>(productDtos, pageable, total);
+
+    }
+
     private List<Product> getProductPageFetchJoinThumbnailUrlsWithParam(
         Pageable pageable,
         String sql,
@@ -74,30 +94,41 @@ public class ProductService {
     ) {
         int offset = pageable.getPageNumber() * pageable.getPageSize();
         int limit = pageable.getPageSize();
+        String order = StringUtils.collectionToCommaDelimitedString(
+            StreamSupport.stream(pageable.getSort().spliterator(), false)
+                .map(o -> o.getProperty() + " " + o.getDirection())
+                .collect(Collectors.toList()));
+        sql += " ORDER BY P."+ order;
         List<Product> products = em.createQuery(sql, Product.class)
             .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
             .setParameter("param", param)
             .setFirstResult(offset)
             .setMaxResults(limit)
             .getResultList();
-        fetchJoinThumbnailUrls(products);
+        fetchJoinThumbnailUrls(pageable, products);
         return products;
     }
 
     private List<Product> getProductPageFetchJoinThumbnailUrls(Pageable pageable, String sql) {
         int offset = pageable.getPageNumber() * pageable.getPageSize();
         int limit = pageable.getPageSize();
+        String order = StringUtils.collectionToCommaDelimitedString(
+            StreamSupport.stream(pageable.getSort().spliterator(), false)
+                .map(o -> o.getProperty() + " " + o.getDirection())
+                .collect(Collectors.toList()));
+        sql += " ORDER BY P."+ order;
         List<Product> products = em.createQuery(sql, Product.class)
             .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
             .setFirstResult(offset)
             .setMaxResults(limit)
             .getResultList();
-        fetchJoinThumbnailUrls(products);
+        fetchJoinThumbnailUrls(pageable, products);
         return products;
     }
 
-    private void fetchJoinThumbnailUrls(List<Product> products) {
-        products = em.createQuery("SELECT DISTINCT P FROM Product P LEFT JOIN FETCH P.thumbnailUrls where P in :products", Product.class)
+    private void fetchJoinThumbnailUrls(Pageable pageable, List<Product> products) {
+        String sql = "SELECT DISTINCT P FROM Product P LEFT JOIN FETCH P.thumbnailUrls where P in :products";
+        products = em.createQuery(sql, Product.class)
             .setParameter("products", products)
             .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
             .getResultList();

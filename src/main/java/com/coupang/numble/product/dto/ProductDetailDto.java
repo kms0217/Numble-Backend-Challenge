@@ -12,6 +12,7 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 @Getter
 @Setter
@@ -29,6 +30,8 @@ public class ProductDetailDto {
     boolean goldBox;
     boolean rocketShipping;
     String detailsPageUrl;
+    private int reviewNum;
+    private int starRate;
 
     public static ProductDetailDto of(Product product) {
         return ModelMapperUtils.getModelMapper().map(product, ProductDetailDto.class);

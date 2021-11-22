@@ -19,14 +19,13 @@
     </div>
     <div class="nav-bottom">
       <div class="category-btn">
-
       </div>
       <div class="nav-menu">
         <div class="nav-menu-top">
           <img class="nav-logo" src="/image/logo.png" onclick="location.href='/'">
           <div class="search-container nav-box">
-            <input class="nav-box" type="text" id="nav-search" placeholder="찾고 싶은 상품을 검색해보세요!">
-            <i class="fas fa-search" id="nav-search-icon"></i>
+            <input class="nav-box" type="text" id="nav-search" placeholder="찾고 싶은 상품을 검색해보세요!" onkeydown="if (event.keyCode==13){search();}">
+            <i class="fas fa-search" id="nav-search-icon" onclick="search()"></i>
           </div>
           <div class="nav-icon">
             <div class="nav-mycoupang" onclick="location.href='/order/list'">
@@ -44,5 +43,10 @@
       </div>
     </div>
   </div>
+  <script>
+    function search() {
+      window.location.href = "/search?keyword=" + $("#nav-search").val();
+    }
+  </script>
 </div>
 </html>

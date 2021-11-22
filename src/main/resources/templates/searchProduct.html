@@ -7,14 +7,27 @@
 <main id="main" class="content-container">
   <div class="content">
     <ul id="categoryTrack">
-      <li><a href="/">낮은가격순</a>&nbsp ></li>
-      <li><a href="/">높은가격순</a>&nbsp ></li>
-      <li><a href="/">판매량순</a>&nbsp ></li>
-      <li><a href="/">최신순</a>&nbsp ></li>
+      <li><a th:href="'/search?keyword='+ ${keyword} + '&sort=price,asc&page=0&rocketFilter=' + ${rocketFilter}">낮은가격순</a></li>
+      <li><a th:href="'/search?keyword='+ ${keyword} + '&sort=price,desc&page=0&rocketFilter=' + ${rocketFilter}">높은가격순</a></li>
+      <li><a th:href="'/search?keyword='+ ${keyword} + '&sort=salesRate,desc&page=0&rocketFilter=' + ${rocketFilter}">판매량순</a></li>
+      <li><a th:href="'/search?keyword='+ ${keyword} + '&sort=updatedAt,desc&page=0&rocketFilter=' + ${rocketFilter}">최신순</a></li>
     </ul>
+    <input type="checkbox" th:checked="${rocketFilter}">
     <div th:replace="productGrid.html :: fragment-productGrid(${productPage})"></div>
   </div>
 </main>
-<div th:replace="paginationBar.html :: fragment-paginationBar(${productPage})"></div>
-</body>
+<div id="pagination">
+  <span th:if="${productPage.getNumber()}/10 >= 1">
+    <a th:href="@{__${#httpServletRequest.requestURI}__(page= ${productPage.getNumber() / 10 * 10 -1}, sort = ${sort} + ',' + ${direction}, rocketFilter = ${rocketFilter}, keyword = ${keyword})}">이전 페이지</a>
+  </span>
+  <th:block th:each="idx : ${#numbers.sequence(productPage.getNumber()/10 * 10 + 1, T(Math).min(productPage.getNumber()/10 * 10 + 10, productPage.getTotalPages()))}">
+    <span class="selected-num" th:if="${idx - 1 == productPage.getNumber()}" th:text="${idx}"></span>
+    <span th:unless="${idx - 1 == productPage.getNumber()}">
+      <a th:href="@{__${#httpServletRequest.requestURI}__(page = ${idx - 1}, sort = ${sort} + ',' + ${direction}, rocketFilter = ${rocketFilter}, keyword = ${keyword})}" th:text="${idx}"></a>
+    </span>
+  </th:block>
+  <span th:if="${productPage.getNumber()}/10 != ${productPage.getTotalPages() - 1}/10">
+    <a th:href="@{__${#httpServletRequest.requestURI}__(page = ${productPage.getNumber() / 10 + 10}, sort = ${sort} + ',' + ${direction}, rocketFilter = ${rocketFilter}, keyword = ${keyword})}">다음 페이지</a>
+  </span>
+</div></body>
 </html>

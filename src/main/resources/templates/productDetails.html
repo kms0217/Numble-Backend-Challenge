@@ -27,8 +27,8 @@
       <div class="prod-buy">
         <p class="prod-title" th:text="${product.title}"
            style="font-size: 18px; font-weight: bold; margin-bottom: 10px;"></p>
-        <span class="star" style="float: left;">별점 : 3/5</span>
-        <span class="review" style="color: #0074e9; float: left; margin-left: 20px;"><a>n개 상품평</a></span>
+        <span class="star" style="float: left;" th:text="'별점 :' + ${product.starRate} + '/5'"></span>
+        <span class="review" style="color: #0074e9; float: left; margin-left: 20px;"><a th:text="${product.reviewNum} + '개 상품평'"></a></span>
         <br>
         <div class="origin-price-info">
           <span class="sale-rate">5%</span>
