@@ -1,0 +1,23 @@
+#categoryTrack {
+  height: auto;
+  display: inline-block;
+  width: 980px;
+  min-height: 40px;
+  padding-top: 8px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+#categoryTrack li {
+  list-style: none;
+  float: left;
+  position: relative;
+  font-size: 11px;
+  padding: 0 6px 0 3px;
+  height: 28px;
+  line-height: 28px;
+}
+
+#categoryTrack li a {
+  display: inline;
+}

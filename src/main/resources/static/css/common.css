@@ -1,0 +1,31 @@
+
+.main-content-container {
+  box-sizing: border-box;
+  display: block;
+  width: 750px;
+  float: right;
+  min-height: 1000px;
+}
+
+.main-content {
+  margin: 0 25px;
+  text-align: center;
+}
+
+.content-container {
+  z-index: inherit !important;
+  width: 980px;
+  margin: 0 auto;
+  position: relative;
+  padding: 40px;
+  display: block;
+}
+
+.content {
+  position: relative;
+  min-height: 1000px;
+  color: black;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+}
