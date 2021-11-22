@@ -1,6 +1,7 @@
 package com.coupang.numble.product.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,10 +23,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Category parentId;
+    private Category parent;
 
     private String name;
 }

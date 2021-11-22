@@ -48,4 +48,13 @@ public class ProductService {
 
         return new PageImpl<>(productList, pageable, total);
     }
+
+    public Product getProduct(Long productId) {
+        return repository.findById(productId)
+            .orElseThrow(() -> new RuntimeException());
+    }
+
+    public List<Product> getCompanyProductLimit4(Long productId, Long companyId) {
+        return repository.findTop4ByCompanyIdAndNotId(companyId, productId);
+    }
 }

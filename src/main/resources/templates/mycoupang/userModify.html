@@ -12,7 +12,7 @@
           crossorigin="anonymous"></script>
 </head>
 <body>
-<div th:replace="nav.html :: fragment-nav()"></div>
+<div th:replace="nav.html :: fragment-nav(${user})"></div>
 <div class="content-container">
   <div class="content-container">
     <h1>회원정보확인</h1>

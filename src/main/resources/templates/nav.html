@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<div th:fragment="fragment-nav()">
+<div th:fragment="fragment-nav(user)">
   <div id="container" class="nav-bar">
     <div class="nav-top">
       <div style="width: 1020px; margin: 0 auto;">
         <div class="nav-top-menu">
-          <li id="login"><a href="/login">로그인</a></li>
-          <li id="signup"><a href="/signup">회원가입</a></li>
-          <!--          <li id="username"><a href="/mc">유저이름 </a>님</li>-->
-          <!--          <li id="logout"><a href="/logout">logout</a></li>-->
+          <th:block th:if="${user == null}">
+            <li id="login"><a href="/login">로그인</a></li>
+            <li id="signup"><a href="/signup">회원가입</a></li>
+          </th:block>
+          <th:block th:unless="${user == null}">
+            <li id="username"><a href="/order/list" th:text="${user.username} + ' 님'"></a></li>
+            <li id="logout"><a href="/logout">logout</a></li>
+          </th:block>
         </div>
       </div>
     </div>

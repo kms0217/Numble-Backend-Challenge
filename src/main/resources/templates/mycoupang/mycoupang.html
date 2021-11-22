@@ -9,7 +9,7 @@
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div th:replace="nav.html :: fragment-nav()"></div>
+<div th:replace="nav.html :: fragment-nav(${user})"></div>
 <div class="content-container">
   <th:block th:switch="${mcPage}">
     <th:block th:case="'membership'">

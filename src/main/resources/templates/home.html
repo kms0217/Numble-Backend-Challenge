@@ -11,7 +11,7 @@
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div th:replace="nav.html :: fragment-nav()"></div>
+<div th:replace="nav.html :: fragment-nav(${user})"></div>
 <main id="main">
   <div class="grid-container">
     <div th:each="product : ${productPage.content}" class="grid-item">
