@@ -18,7 +18,7 @@ public class CategoryService {
         this.repository = repository;
     }
 
-    public List<Category> getAllRootCategory(Long categoryId) {
+    public List<Category> getAllParentCategory(Long categoryId) {
         List<Category> categoryList = new ArrayList<>();
         Category category = repository.findById(categoryId).orElse(null);
         if (category == null)
@@ -34,7 +34,7 @@ public class CategoryService {
         return categoryList;
     }
 
-    public List<Category> getChildCategoryId(Long categoryId) {
+    public List<Category> getChildCategory(Long categoryId) {
         Queue<Category> categoryQueue = new LinkedList<>();
         categoryQueue.addAll(repository.findAllByParentId(categoryId));
         List<Category> categoryList = new ArrayList<>();

@@ -12,22 +12,25 @@
 </head>
 <body>
 <div th:replace="nav.html :: fragment-nav(${user})"></div>
-<ul id="categoryTrack" th:if="${categoryList != null}">
-  <li><a href="/">쿠팡 홈</a>&nbsp ></li>
-  <li th:each="idx : ${#numbers.sequence(0, categoryList.size() - 1)}">
-    <a th:href="@{/products/categories/{categoryId}(categoryId=${categoryList[idx].id})}" th:text="${categoryList[idx].name}"></a>
-    <th:block th:if="${idx != categoryList.size() - 1}">&nbsp ></th:block>
-  </li>
-</ul>
-<main id="main">
-  <div class="grid-container">
-    <div th:each="product : ${productPage.content}" class="grid-item">
-      <a th:href="@{/products/{productId}(productId=${product.id})}" class="view-product">
-        <img th:src="${product.thumbnailUrls[0].thumbnailUrl}">
-        <p th:text="${product.title}"></p>
-        <p th:text="${product.price}+ ' 원'"></p>
-        <span th:if="${product.rocketShipping}">로켓배송</span>
-      </a>
+<main id="main" class="content-container">
+  <div class="content">
+    <ul id="categoryTrack" th:if="${categoryList != null}">
+      <li><a href="/">쿠팡 홈</a>&nbsp ></li>
+      <li th:each="idx : ${#numbers.sequence(0, categoryList.size() - 1)}">
+        <a th:href="@{/products/categories/{categoryId}(categoryId=${categoryList[idx].id})}"
+           th:text="${categoryList[idx].name}"></a>
+        <th:block th:if="${idx != categoryList.size() - 1}">&nbsp ></th:block>
+      </li>
+    </ul>
+    <div class="grid-container">
+      <div th:each="product : ${productPage.content}" class="grid-item">
+        <a th:href="@{/products/{productId}(productId=${product.id})}" class="view-product">
+          <img th:src="${product.thumbnailUrl}">
+          <p th:text="${product.title}"></p>
+          <p th:text="${product.price}+ ' 원'"></p>
+          <span th:if="${product.rocketShipping}">로켓배송</span>
+        </a>
+      </div>
     </div>
   </div>
 </main>
@@ -35,8 +38,10 @@
   <span th:if="${productPage.getNumber()}/10 >= 1">
     <a th:href="@{__${#httpServletRequest.requestURI}__/(page = ${productPage.getNumber()})}">이전 페이지</a>
   </span>
-  <th:block th:each="idx : ${#numbers.sequence(productPage.getNumber()/10 * 10 + 1, T(Math).min(productPage.getNumber()/10 * 10 + 10, productPage.getTotalPages()))}">
-    <span class="selected-num" th:if="${idx - 1 == productPage.getNumber()}" th:text="${idx}"></span>
+  <th:block
+      th:each="idx : ${#numbers.sequence(productPage.getNumber()/10 * 10 + 1, T(Math).min(productPage.getNumber()/10 * 10 + 10, productPage.getTotalPages()))}">
+    <span class="selected-num" th:if="${idx - 1 == productPage.getNumber()}"
+          th:text="${idx}"></span>
     <span th:unless="${idx - 1 == productPage.getNumber()}">
       <a th:href="@{__${#httpServletRequest.requestURI}__/(page= ${idx - 1})}" th:text="${idx}"></a>
     </span>

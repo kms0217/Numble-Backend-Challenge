@@ -45,6 +45,6 @@ public class Product {
     Integer price;
     boolean goldBox;
     boolean rocketShipping;
-    String thumbnailUrl;
     String detailsPageUrl;
+
 }

@@ -22,7 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findById(Long productId);
 
     @Query(value = "SELECT * FROM Product P WHERE P.company_id = ?1 and NOT P.id = ?2 LIMIT 4", nativeQuery = true)
-    List<Product> findTop4ByCompanyIdAndNotId(Long companyId, Long productId);
+    List<Product> find4ProductByCompanyIdAndNotId(Long companyId, Long productId);
 
     @Query("SELECT COUNT(P) FROM Product P WHERE P.company.id = ?1")
     int countAllByCompanyId(Long companyId);

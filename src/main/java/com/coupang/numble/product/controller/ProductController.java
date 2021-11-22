@@ -1,5 +1,7 @@
 package com.coupang.numble.product.controller;
 
+import com.coupang.numble.product.dto.ProductDetailDto;
+import com.coupang.numble.product.dto.ProductDto;
 import com.coupang.numble.product.entity.Category;
 import com.coupang.numble.product.entity.Product;
 import com.coupang.numble.product.service.CategoryService;
@@ -39,8 +41,8 @@ public class ProductController {
     ) {
         if (principal != null)
             model.addAttribute("user", UserResDto.of(principal.getUser()));
-        Product product = service.getProduct(productId);
-        List<Category> categoryList = categoryService.getAllRootCategory(product.getType().getId());
+        ProductDetailDto product = service.getProduct(productId);
+        List<Category> categoryList = categoryService.getAllParentCategory(product.getType().getId());
         List<Product> companyProduct = service.getCompanyProductLimit4(productId, product.getCompany().getId());
         model.addAttribute("product", product);
         model.addAttribute("categoryList", categoryList);
@@ -57,7 +59,7 @@ public class ProductController {
     ) {
         if (principal != null)
             model.addAttribute("user", UserResDto.of(principal.getUser()));
-        List<Category> categoryList = categoryService.getAllRootCategory(categoryId);
+        List<Category> categoryList = categoryService.getAllParentCategory(categoryId);
         model.addAttribute("productPage", service.getCategoryProductPage(categoryId, pageable));
         model.addAttribute("categoryList", categoryList);
         return "productList";
