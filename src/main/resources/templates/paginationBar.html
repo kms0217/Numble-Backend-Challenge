@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<div th:fragment="fragment-paginationBar(productPage)" id="pagination">
+  <span th:if="${productPage.getNumber()}/10 >= 1">
+    <a th:href="@{/(page= ${productPage.getNumber() / 10 * 10 -1})}">이전 페이지</a>
+  </span>
+    <th:block th:each="idx : ${#numbers.sequence(productPage.getNumber()/10 * 10 + 1, T(Math).min(productPage.getNumber()/10 * 10 + 10, productPage.getTotalPages()))}">
+      <span class="selected-num" th:if="${idx - 1 == productPage.getNumber()}" th:text="${idx}"></span>
+      <span th:unless="${idx - 1 == productPage.getNumber()}">
+      <a th:href="@{/(page= ${idx - 1})}" th:text="${idx}"></a>
+    </span>
+    </th:block>
+    <span th:if="${productPage.getNumber()}/10 != ${productPage.getTotalPages() - 1}/10">
+    <a th:href="@{/(page = ${productPage.getNumber() / 10 + 10})}">다음 페이지</a>
+  </span>
+</div>
+</html>

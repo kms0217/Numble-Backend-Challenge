@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<div th:fragment="fragment-productGrid(productPage)" class="grid-container">
+  <div th:each="product : ${productPage.content}" class="grid-item">
+    <a th:href="@{/products/{productId}(productId=${product.id})}" class="view-product">
+      <img th:src="${product.thumbnailUrl}">
+      <p th:text="${product.title}"></p>
+      <p th:text="${product.price}+ ' 원'"></p>
+      <span th:if="${product.rocketShipping}">로켓배송</span>
+    </a>
+  </div>
+</div>
+</html>

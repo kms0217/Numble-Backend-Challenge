@@ -6,13 +6,11 @@
 <div th:replace="nav.html :: fragment-nav(${user})"></div>
 <main id="main" class="content-container">
   <div class="content">
-    <ul id="categoryTrack" th:if="${categoryList != null}">
-      <li><a href="/">쿠팡 홈</a>&nbsp ></li>
-      <li th:each="idx : ${#numbers.sequence(0, categoryList.size() - 1)}">
-        <a th:href="@{/products/categories/{categoryId}(categoryId=${categoryList[idx].id})}"
-           th:text="${categoryList[idx].name}"></a>
-        <th:block th:if="${idx != categoryList.size() - 1}">&nbsp ></th:block>
-      </li>
+    <ul id="categoryTrack">
+      <li><a href="/">낮은가격순</a>&nbsp ></li>
+      <li><a href="/">높은가격순</a>&nbsp ></li>
+      <li><a href="/">판매량순</a>&nbsp ></li>
+      <li><a href="/">최신순</a>&nbsp ></li>
     </ul>
     <div th:replace="productGrid.html :: fragment-productGrid(${productPage})"></div>
   </div>
