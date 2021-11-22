@@ -1,5 +1,6 @@
 package com.coupang.numble.product.entity;
 
+import com.coupang.numble.common.entity.Base;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -13,12 +14,13 @@ import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
-public class Product {
+public class Product extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +42,12 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<ProductImage> thumbnailUrls = new HashSet<>();
+
+    @Formula("(select count(1) from review r where r.product_id = id)")
+    private int reviewNum;
+
+    @Formula("(select AVG(r.star) from review r where r.product_id = id)")
+    private int starRate;
 
     String title;
     Integer price;
