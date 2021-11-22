@@ -65,7 +65,7 @@
 .search-container {
   position: relative;
   z-index: 3;
-  width: 484px;
+  width: 484px !important;
   float: left;
   margin-left: 0;
   height: 39px;
