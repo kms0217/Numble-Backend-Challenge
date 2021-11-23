@@ -47,7 +47,7 @@ public class ProductService {
     public List<Product> getCompanyProductLimit4(Long productId, Long companyId) {
         return repository.findFirst4ByCompanyIdAndIdNot(companyId, productId);
     }
-    
+
 
     public Page<ProductDto> getCategoryProductPage(Long categoryId, Pageable pageable) {
         String sql = "SELECT DISTINCT P FROM Product P WHERE P.type in :param";
@@ -74,7 +74,7 @@ public class ProductService {
         String sql = "SELECT DISTINCT P FROM Product P WHERE P.title LIKE :param";
         int total;
         if (rocketFilter) {
-            sql += " AND rocketShipping";
+            sql += " AND rocketShipping = true";
             total = repository.countAllByFilterWithRocket(keyword);
         } else {
             total = repository.countAllByFilter(keyword);

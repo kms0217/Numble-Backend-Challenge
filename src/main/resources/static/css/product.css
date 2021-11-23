@@ -86,3 +86,9 @@
   float: left;
   position: relative;
 }
+
+.priceasc-price-ASC, .pricedesc-price-DESC,
+.salesrate-salesRate-DESC, .updateat-updatedAt-DESC {
+  color: #0074e9 !important;
+  font-weight: bold;
+}

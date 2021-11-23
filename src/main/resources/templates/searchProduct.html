@@ -7,12 +7,25 @@
 <main id="main" class="content-container">
   <div class="content">
     <ul id="categoryTrack">
-      <li><a th:href="'/search?keyword='+ ${keyword} + '&sort=price,asc&page=0&rocketFilter=' + ${rocketFilter}">낮은가격순</a></li>
-      <li><a th:href="'/search?keyword='+ ${keyword} + '&sort=price,desc&page=0&rocketFilter=' + ${rocketFilter}">높은가격순</a></li>
-      <li><a th:href="'/search?keyword='+ ${keyword} + '&sort=salesRate,desc&page=0&rocketFilter=' + ${rocketFilter}">판매량순</a></li>
-      <li><a th:href="'/search?keyword='+ ${keyword} + '&sort=updatedAt,desc&page=0&rocketFilter=' + ${rocketFilter}">최신순</a></li>
+      <li><a
+          th:href="'/search?keyword='+ ${keyword} + '&sort=price,asc&page=0&rocketFilter=' + ${rocketFilter}"
+          th:classappend="'priceasc-' + ${sort} + '-' + ${direction}">낮은가격순</a></li>
+      <li><a
+          th:href="'/search?keyword='+ ${keyword} + '&sort=price,desc&page=0&rocketFilter=' + ${rocketFilter}"
+          th:classappend="'pricedesc-' + ${sort} + '-' + ${direction}">높은가격순</a></li>
+      <li><a
+          th:href="'/search?keyword='+ ${keyword} + '&sort=salesRate,desc&page=0&rocketFilter=' + ${rocketFilter}"
+          th:classappend="'salesrate-' + ${sort} + '-' + ${direction}">판매량순</a></li>
+      <li><a
+          th:href="'/search?keyword='+ ${keyword} + '&sort=updatedAt,desc&page=0&rocketFilter=' + ${rocketFilter}"
+          th:classappend="'updateat-' + ${sort} + '-' + ${direction}">최신순</a></li>
+      <li style="color: #0074e9; margin-left: 20px">로켓<input type="checkbox"
+                                                             id="rocket-filter-box"
+                                                             th:checked="${rocketFilter}"
+                                                             onclick="rocket()"
+                                                             style="vertical-align: text-bottom; margin-left: 5px">
+      </li>
     </ul>
-    <input type="checkbox" th:checked="${rocketFilter}">
     <div th:replace="productGrid.html :: fragment-productGrid(${productPage})"></div>
   </div>
 </main>
@@ -20,14 +33,28 @@
   <span th:if="${productPage.getNumber()}/10 >= 1">
     <a th:href="@{__${#httpServletRequest.requestURI}__(page= ${productPage.getNumber() / 10 * 10 -1}, sort = ${sort} + ',' + ${direction}, rocketFilter = ${rocketFilter}, keyword = ${keyword})}">이전 페이지</a>
   </span>
-  <th:block th:each="idx : ${#numbers.sequence(productPage.getNumber()/10 * 10 + 1, T(Math).min(productPage.getNumber()/10 * 10 + 10, productPage.getTotalPages()))}">
-    <span class="selected-num" th:if="${idx - 1 == productPage.getNumber()}" th:text="${idx}"></span>
+  <th:block
+      th:each="idx : ${#numbers.sequence(productPage.getNumber()/10 * 10 + 1, T(Math).min(productPage.getNumber()/10 * 10 + 10, productPage.getTotalPages()))}">
+    <span class="selected-num" th:if="${idx - 1 == productPage.getNumber()}"
+          th:text="${idx}"></span>
     <span th:unless="${idx - 1 == productPage.getNumber()}">
-      <a th:href="@{__${#httpServletRequest.requestURI}__(page = ${idx - 1}, sort = ${sort} + ',' + ${direction}, rocketFilter = ${rocketFilter}, keyword = ${keyword})}" th:text="${idx}"></a>
+      <a th:href="@{__${#httpServletRequest.requestURI}__(page = ${idx - 1}, sort = ${sort} + ',' + ${direction}, rocketFilter = ${rocketFilter}, keyword = ${keyword})}"
+         th:text="${idx}"></a>
     </span>
   </th:block>
   <span th:if="${productPage.getNumber()}/10 != ${productPage.getTotalPages() - 1}/10">
     <a th:href="@{__${#httpServletRequest.requestURI}__(page = ${productPage.getNumber() / 10 + 10}, sort = ${sort} + ',' + ${direction}, rocketFilter = ${rocketFilter}, keyword = ${keyword})}">다음 페이지</a>
   </span>
-</div></body>
+</div>
+<script>
+  function rocket() {
+    let params = new URLSearchParams(location.search);
+    if (params.get('rocketFilter'))
+      params.set('rocketFilter', 'false')
+    else
+      params.set('rocketFilter', 'true')
+    window.open(location.pathname + '?' + params, '_self')
+  }
+</script>
+</body>
 </html>
