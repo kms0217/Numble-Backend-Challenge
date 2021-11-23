@@ -92,3 +92,7 @@
   color: #0074e9 !important;
   font-weight: bold;
 }
+
+.cart-item-box {
+  width: 300px;
+}

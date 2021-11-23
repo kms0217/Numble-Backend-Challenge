@@ -13,7 +13,7 @@
         <th:block th:if="${idx != categoryList.size() - 1}">&nbsp ></th:block>
       </li>
     </ul>
-    <div class="product-details">
+    <div class="product-details" id="productId" th:value="${product.id}">
       <div class="prod-image" data-global-banner-fold="">
         <div>
           <div class="prod-image-item">
@@ -51,36 +51,39 @@
           <div>택배사 : 한진 택배</div>
         </div>
         <div>판매자: <span th:text="${product.company.name}"></span> <a th:href="'/products/companies/' + ${product.company.id}" style="color: #0074e9">판매자 다른 상품 보러가기</a></div>
-        <div class="general-option" th:if="${product.clothesOptions.size() == 0}">
+        <div class="general-option option-form" th:if="${product.clothesOptions.size() == 0}" value="general">
           <span>option:</span>
           <select class="form-control" name="option" id="optionSelect" onchange="optionChange()" style="width: 200px;">
             <option th:each="option : ${product.optionSet}"
                     th:text="${option.title} + ' : ' + ${option.price}"
-                    th:title = "${option.title}",
+                    th:title = "${option.title}"
                     th:price = "${option.price}"
+                    th:optionId = "${option.id}"
             >
             </option>
           </select>
         </div>
-        <div class="clothes-option" th:unless="${product.clothesOptions.size() == 0}">
+        <div class="clothes-option option-form" th:unless="${product.clothesOptions.size() == 0}" value="clothes">
           <div>
             <span>size:</span>
-            <select class="form-control" name="size" style="width: 100px" id="clothSizeOption">
+            <select class="form-control" id="size-option" name="size" style="width: 100px">
               <option th:each="clothesOption : ${product.clothesOptions}"
                       th:text="${clothesOption.size}"
+                      th:size="${clothesOption.size}"
               >
               </option>
             </select>
             <span>color:</span>
-            <select class="form-control" name="color" style="width: 100px" id="clothColorOption">
+            <select class="form-control" id="color-option" name="color" style="width: 100px">
               <option th:each="clothesOption : ${product.clothesOptions}"
                       th:text="${clothesOption.color}"
+                      th:color="${clothesOption.color}"
               >
               </option>
             </select>
           </div>
         </div>
-        <input type="number" value="1" style="width: 61px">
+        <input id="count-input" type="number" value="1" style="width: 61px">
         <button class="cart-btn btn btn-default" id="to-cart-btn" onclick="toCart()">장바구니 담기</button>
         <button class="buy-btn btn btn-primary" id="to-buy-btn">구매하기</button>
       </div>
