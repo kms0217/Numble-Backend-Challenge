@@ -2,9 +2,54 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="head.html :: fragment-head()"></head>
-<main id="main">
-  <div th:replace="productGrid.html :: fragment-productGrid(${productPage})"></div>
-</main>
-<div th:replace="paginationBar.html :: fragment-paginationBar(${productPage})"></div>
+<div class="content-container" id="rocketUser" th:value="${user.rocketMembership}">
+  <div class="content">
+    <h2>장바구니</h2>
+    <div class="rocket-prod-cart" style="float: left">
+      <h5>로켓배송</h5>
+      <p>로켓 배송 총 가격 : <span id="summary-rocket"></span></p>
+      <div class="cart-item-box">
+        <th:block th:each="item : ${cartItems}">
+          <div th:if="${item.rocketShipping}" class="cart-item-box"
+               th:id="'item-box-' + ${item.cartId}">
+            <input type="checkbox" class="prod-checkbox" th:id="'check-box-' + ${item.cartId}" th:onchange="changeCheckBox('rocket', [[${item.cartId}]])">
+            <span class="prod-title" th:text="${item.productName}"></span>
+            <div th:text="'도착 예정 시간 : ' + ${item.arriveExpected}"></div>
+            <div class="prod-price" th:text="'가격' + ${item.price}" th:id="'price-' + ${item.cartId}" th:value="${item.price}"></div>
+            <input type="number" class="prod-number" min="1" th:value="${item.count}" th:id="'input-number-' + ${item.cartId}" style="width: 60px" th:onchange="changeCount('rocket', [[${item.cartId}]])" th:keep="${item.count}">
+            <button class="btn btn-danger" style="font-size: 14px" th:onclick="deleteCart([[${item.cartId}]])">삭제</button>
+          </div>
+        </th:block>
+      </div>
+    </div>
+    <div class="general-prod-cart" style="float: right">
+      <h5>일반배송</h5>
+      <p>일반 배송 총 가격 : <span id="summary-general"></span></p>
+      <div class="cart-item-box">
+        <th:block th:each="item : ${cartItems}">
+          <div th:if="!${item.rocketShipping}" class="cart-item-box"
+               th:id="'item-box-' + ${item.cartId}">
+            <input class="prod-checkbox" type="checkbox" th:id="'check-box-' + ${item.cartId}" th:onchange="changeCheckBox('general', [[${item.cartId}]])">
+            <span class="prod-title" th:text="${item.productName}"></span>
+            <div th:text="'도착 예정 시간 : ' + ${item.arriveExpected}"></div>
+            <div class="prod-price" th:text="'가격' + ${item.price}" th:id="'price-' + ${item.cartId}" th:value="${item.price}"></div>
+            <input type="number" class="prod-number" min="1" th:value="${item.count}" th:id="'input-number-' + ${item.cartId}" style="width: 60px" th:onchange="changeCount('general', [[${item.cartId}]])" th:keep="${item.count}">
+            <button class="btn btn-danger" style="font-size: 14px" th:onclick="deleteCart([[${item.cartId}]])">삭제</button>
+          </div>
+        </th:block>
+    </div>
+    <div class="summary">
+      <div id="summary-price"></div>
+      <div id="summary-delivery-price"></div>
+      <div id="summary-final-price"></div>
+    </div>
+    <button class="btn btn-default" style="border: 2px solid #0074e9" onclick="location.href='/'">계속
+      쇼핑하기
+    </button>
+    <button class="btn btn-primary" onclick="location.href='/'">주문하기</button>
+  </div>
+</div>
+</div>
+<script src="/js/cart.js"></script>
 </body>
 </html>
