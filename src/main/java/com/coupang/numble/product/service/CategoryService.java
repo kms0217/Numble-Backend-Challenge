@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoryService {
@@ -18,6 +19,7 @@ public class CategoryService {
         this.repository = repository;
     }
 
+    @Transactional(readOnly = true)
     public List<Category> getAllParentCategory(Long categoryId) {
         List<Category> categoryList = new ArrayList<>();
         Category category = repository.findById(categoryId).orElse(null);
@@ -34,6 +36,7 @@ public class CategoryService {
         return categoryList;
     }
 
+    @Transactional(readOnly = true)
     public List<Category> getChildCategory(Long categoryId) {
         Queue<Category> categoryQueue = new LinkedList<>();
         categoryQueue.addAll(repository.findAllByParentId(categoryId));

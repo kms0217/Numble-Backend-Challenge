@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 @Service
@@ -30,6 +31,7 @@ public class ProductService {
         this.em = em;
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductDto> getAllProductPage(Pageable pageable) {
         String sql = "SELECT DISTINCT P FROM Product P";
         int total = repository.countAll();
@@ -39,16 +41,18 @@ public class ProductService {
         return new PageImpl<>(productDtos, pageable, total);
     }
 
+    @Transactional(readOnly = true)
     public ProductDetailDto getProduct(Long productId) {
         Product product =  repository.findById(productId).orElseThrow(() -> new RuntimeException());
         return ProductDetailDto.of(product);
     }
 
+    @Transactional(readOnly = true)
     public List<Product> getCompanyProductLimit4(Long productId, Long companyId) {
         return repository.findFirst4ByCompanyIdAndIdNot(companyId, productId);
     }
 
-
+    @Transactional(readOnly = true)
     public Page<ProductDto> getCategoryProductPage(Long categoryId, Pageable pageable) {
         String sql = "SELECT DISTINCT P FROM Product P WHERE P.type in :param";
         List<Category> childCategoryList = categoryService.getChildCategory(categoryId);
@@ -60,6 +64,7 @@ public class ProductService {
         return new PageImpl<>(productDtos, pageable, total);
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductDto> getAllCompanyProductPage(Long companyId, Pageable pageable) {
         String sql = "SELECT DISTINCT P FROM Product P WHERE P.company.id = :param";
         int total = repository.countAllByCompanyId(companyId);
@@ -70,6 +75,7 @@ public class ProductService {
         return new PageImpl<>(productDtos, pageable, total);
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductDto> getProductPageBySearch(String keyword, boolean rocketFilter, Pageable pageable) {
         String sql = "SELECT DISTINCT P FROM Product P WHERE P.title LIKE :param";
         int total;
@@ -87,6 +93,7 @@ public class ProductService {
 
     }
 
+    @Transactional(readOnly = true)
     private List<Product> getProductPageFetchJoinThumbnailUrlsWithParam(
         Pageable pageable,
         String sql,
@@ -109,6 +116,7 @@ public class ProductService {
         return products;
     }
 
+    @Transactional(readOnly = true)
     private List<Product> getProductPageFetchJoinThumbnailUrls(Pageable pageable, String sql) {
         int offset = pageable.getPageNumber() * pageable.getPageSize();
         int limit = pageable.getPageSize();
@@ -126,6 +134,7 @@ public class ProductService {
         return products;
     }
 
+    @Transactional(readOnly = true)
     private void fetchJoinThumbnailUrls(Pageable pageable, List<Product> products) {
         String sql = "SELECT DISTINCT P FROM Product P LEFT JOIN FETCH P.thumbnailUrls where P in :products";
         products = em.createQuery(sql, Product.class)
