@@ -93,7 +93,6 @@ public class ProductService {
 
     }
 
-    @Transactional(readOnly = true)
     private List<Product> getProductPageFetchJoinThumbnailUrlsWithParam(
         Pageable pageable,
         String sql,
@@ -116,7 +115,6 @@ public class ProductService {
         return products;
     }
 
-    @Transactional(readOnly = true)
     private List<Product> getProductPageFetchJoinThumbnailUrls(Pageable pageable, String sql) {
         int offset = pageable.getPageNumber() * pageable.getPageSize();
         int limit = pageable.getPageSize();
@@ -134,7 +132,6 @@ public class ProductService {
         return products;
     }
 
-    @Transactional(readOnly = true)
     private void fetchJoinThumbnailUrls(Pageable pageable, List<Product> products) {
         String sql = "SELECT DISTINCT P FROM Product P LEFT JOIN FETCH P.thumbnailUrls where P in :products";
         products = em.createQuery(sql, Product.class)
