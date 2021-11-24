@@ -16,8 +16,8 @@
                    th:onchange="changeCheckBox('rocket', [[${item.cartId}]], [[${item.productId}]])" th:checked="${item.selected}">
             <span class="prod-title" th:text="${item.productName}"></span>
             <div th:text="'도착 예정 시간 : ' + ${item.arriveExpected}"></div>
-            <div class="prod-price" th:if="${user.rocketMembership} && ${item.goldBox}" th:value="${item.price * 0.95 * 0.9}"></div>
-            <div class="prod-price" th:unless="${user.rocketMembership} && ${item.goldBox}" th:value="${item.price * 0.95}"></div>
+            <div class="prod-price" th:if="${user.rocketMembership} and ${item.goldBox}" th:value="${item.price * 0.95 * 0.9}" th:id="'price-' + ${item.cartId}"></div>
+            <div class="prod-price" th:unless="${user.rocketMembership} and ${item.goldBox}" th:value="${item.price * 0.95}" th:id="'price-' + ${item.cartId}"></div>
             <input type="number" class="prod-number" min="1" th:value="${item.count}"
                    th:id="'input-number-' + ${item.cartId}" style="width: 60px"
                    th:onchange="changeCount('rocket', [[${item.cartId}]], [[${item.productId}]])"

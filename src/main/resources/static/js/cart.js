@@ -10,20 +10,25 @@ function changeCheckBox(prodType, cartId, productId) {
   let count_el = $("#input-number-" + cartId);
   if (!$("#check-box-" + cartId).is(':checked')) {
     if (prodType === "rocket") {
-      rocketPrice -= (price_el.attr("value") * count_el.val())
-      if (!rocketUser && rocketPrice < 19800)
+      rocketPrice -= (Number(price_el.attr("value")) * count_el.val())
+      if (!rocketUser && rocketPrice < 19800 && rocketPrice != 0)
         rocketShippingPrice = 3000;
     } else {
-      generalPrice -= (price_el.attr("value") * count_el.val())
+      generalPrice -= (Number(price_el.attr("value")) * count_el.val())
       generalPrice -= 3000;
     }
   } else {
     if (prodType === "rocket") {
-      rocketPrice += (price_el.attr("value") * count_el.val())
-      if (rocketPrice >= 19800)
+      rocketPrice += (Number(price_el.attr("value")) * count_el.val())
+      console.log(Number(price_el.attr("value")))
+      console.log(count_el.val())
+      console.log(rocketPrice)
+      if (rocketPrice >= 19800 || rocketUser)
         rocketShippingPrice = 0;
+      if (!rocketUser && rocketPrice < 19800)
+        rocketShippingPrice = 3000;
     } else {
-      generalPrice += (price_el.attr("value") * count_el.val())
+      generalPrice += (Number(price_el.attr("value")) * count_el.val())
       generalPrice += 3000;
     }
   }
@@ -37,12 +42,12 @@ function changeCheckBox(prodType, cartId, productId) {
 function changeCount(prodType, cartId, productId) {
   let price_el = $("#price-" + cartId);
   let curr_count = $("#input-number-" + cartId).val();
-  let before_count = $("#input-number-" + cartId).attr("keep");
+  let before_count = Number($("#input-number-" + cartId).attr("keep"));
   $("#input-number-" + cartId).attr("keep", curr_count);
   if($("#check-box-" + cartId).is(':checked')){
     if (prodType === "rocket") {
-      rocketPrice -= price_el.attr("value") * before_count
-      rocketPrice += price_el.attr("value") * curr_count
+      rocketPrice -= Number(price_el.attr("value")) * before_count
+      rocketPrice += Number(price_el.attr("value")) * curr_count
       if (!rocketUser) {
         if (rocketPrice < 19800)
           rocketShippingPrice = 3000;
@@ -50,8 +55,8 @@ function changeCount(prodType, cartId, productId) {
           rocketShippingPrice = 0;
       }
     } else {
-      generalPrice -= price_el.attr("value") * before_count
-      generalPrice += price_el.attr("value") * curr_count
+      generalPrice -= Number(price_el.attr("value")) * before_count
+      generalPrice += Number(price_el.attr("value")) * curr_count
     }
     reRenderPrice(prodType);
   }
@@ -81,17 +86,17 @@ function reRenderPrice(prodType) {
 function calcPrice() {
   $(".rocket-prod-cart .cart-item-box .cart-item-box").each(function (index, item){
     if ($(item).children(".prod-checkbox").is(':checked')) {
-      let price = $(item).children(".prod-price").attr("value")
+      let price = Number($(item).children(".prod-price").attr("value"))
       let count = $(item).children(".prod-number").val()
       rocketPrice += price * count
     }
   })
-  if (!rocketUser && rocketPrice < 19800)
+  if (!rocketUser && rocketPrice < 19800 && rocketPrice != 0)
     rocketShippingPrice = 3000
 
   $(".general-prod-cart .cart-item-box .cart-item-box").each(function (index, item){
     if ($(item).children(".prod-checkbox").is(':checked')) {
-      let price = $(item).children(".prod-price").attr("value")
+      let price = Number($(item).children(".prod-price").attr("value"))
       let count = $(item).children(".prod-number").val()
       generalPrice += price * count
       generalShippingPrice += 3000
