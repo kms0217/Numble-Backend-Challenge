@@ -13,4 +13,7 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByUserId(Long userId);
 
     void deleteByIdAndUserId(Long cartId, Long userId);
+
+    @EntityGraph(attributePaths = {"product", "productOption"})
+    List<Cart> findByUserIdAndSelected(Long userId, boolean select);
 }

@@ -1,19 +1,15 @@
 package com.coupang.numble.order.controller;
 
 import com.coupang.numble.order.dto.OrderReqDto;
+import com.coupang.numble.order.service.CartService;
 import com.coupang.numble.order.service.OrderService;
-import com.coupang.numble.product.dto.ProductDetailDto;
 import com.coupang.numble.product.service.ProductService;
 import com.coupang.numble.user.auth.Principal;
 import com.coupang.numble.user.dto.UserResDto;
 import com.coupang.numble.user.service.MemberAddressService;
-import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,13 +27,15 @@ public class OrderController {
 
     private final OrderService orderService;
     private final MemberAddressService memberAddressService;
+    private final CartService cartService;
     private final ProductService productService;
 
     public OrderController(OrderService orderService,
         MemberAddressService memberAddressService,
-        ProductService productService) {
+        CartService cartService, ProductService productService) {
         this.orderService = orderService;
         this.memberAddressService = memberAddressService;
+        this.cartService = cartService;
         this.productService = productService;
     }
 
@@ -71,13 +69,21 @@ public class OrderController {
         model.addAttribute("address", memberAddressService.getMainAddress(principal.getUser()));
         model.addAttribute("rocketExcept",LocalDateTime.now().withHour(6).withMinute(0).withNano(0).withSecond(0));
         model.addAttribute("generalExcept", LocalDateTime.now().plusDays(3));
+        model.addAttribute("products", cartService.getCheckedCartProduct(principal.getUser().getId()));
         return "order/orderCart";
     }
 
     @PostMapping
     @ResponseBody
     public HttpStatus createOrder(@AuthenticationPrincipal Principal principal, @RequestBody OrderReqDto req) {
-        orderService.createOrderWithOneProduct(principal.getUser(), req);
+        orderService.createOrderWithOneProduct(principal.getUser(), req, true);
+        return HttpStatus.CREATED;
+    }
+
+    @PostMapping("/cart")
+    @ResponseBody
+    public HttpStatus createCartOrder(@AuthenticationPrincipal Principal principal, @RequestBody OrderReqDto req) {
+        orderService.createOrderWithOneProduct(principal.getUser(), req, false);
         return HttpStatus.CREATED;
     }
 }

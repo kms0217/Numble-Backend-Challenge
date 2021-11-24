@@ -28,11 +28,33 @@ function orderReq(count, productId) {
   })
 }
 
+
+function cartOrder() {
+  let data = {
+    "addressId" : $(".address").attr("addressId"),
+    "phoneNumber" : $(".buyer-phone-number").val()
+  }
+
+  $.ajax({
+    type: "post",
+    url: "/order/cart",
+    contentType: "application/json",
+    data: JSON.stringify(data),
+    success: data => {
+      alert("주문 성공")
+      window.location.href = "/"
+    },
+    error: data => {
+      alert("주문 실패")
+    }
+  })
+}
+
 function calcPrice() {
   $(".rocket-prod-order .order-item-box").each(function (index, item){
-    let price = $(item).attr("price")
+    let price = Number($(item).attr("price"))
     let goldBox = JSON.parse($(item).attr("goldBox"))
-    let count = $(item).attr("count")
+    let count = Number($(item).attr("count"))
     $(item).children(".prod-before-sale-price").text(price * count + " 원")
     if (goldBox && rocketUser) {
       $(item).children(".prod-after-sale-price").text(price * count * 0.95 * 0.9 + " 원")
@@ -50,9 +72,8 @@ function calcPrice() {
   }
 
   $(".general-prod-order .order-item-box").each(function (index, item){
-    let price = $(item).attr("price")
-    let goldBox = JSON.parse($(item).attr("goldBox"))
-    let count = $(item).attr("count")
+    let price = Number($(item).attr("price"))
+    let count = Number($(item).attr("count"))
     $(item).children(".prod-before-sale-price").text(price * count + " 원")
     $(item).children(".prod-after-sale-price").text(price * count * 0.95 + " 원")
     generalShippingPrice += 3000
@@ -62,5 +83,5 @@ function calcPrice() {
   let productPrice = rocketPrice + generalPrice
   let shippingPrice = rocketShippingPrice + generalShippingPrice
   let total = productPrice + shippingPrice
-  $(".total-prod-price").textContent("상품 가격 : " + productPrice + " , 배송비 : "+shippingPrice+"  , 총 가격 : " + total)
+  $(".total-prod-price").text("상품 가격 : " + productPrice + " , 배송비 : "+shippingPrice+"  , 총 가격 : " + total)
 }

@@ -2,38 +2,44 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="head.html :: fragment-head()"></head>
-<div class="content-container">
+<div class="content-container" id="rocketUser" th:value="${user.rocketMembership}">
   <div class="content">
     <h2>주문/결제</h2>
     <div th:replace="order/buyerInfo.html :: fragment-buyer-info(${user})"></div>
     <div th:replace="order/receiverInfo.html :: fragment-receiver-info(${user}, ${address})"></div>
     <div class="rocket-prod-order" style="margin-top: 40px">
       <h4>로켓배송</h4>
-      <div>ㅇㅇㅇ도착</div>
-      <div class="cart-item-box" style="margin-top: 10px;">
-        <div class="order-item-box">
-          <span class="prod-title">title</span><span>수량 : n개</span>
-          <span>무료배송</span>
+      <div th:text="${rocketExcept}"></div>
+      <div class="cart-item-box" style="margin-top: 10px;" th:each="product : ${products}" th:if="${product.rocketShipping}">
+        <div class="order-item-box" th:price="${product.price}" th:goldBox="${product.goldBox}" th:count="${product.count}">
+          <span class="prod-title" th:text="${product.productName}"></span>
+          <span class="prod-before-sale-price" style="text-decoration: line-through"></span>
+          <span class="prod-after-sale-price"></span>
         </div>
+        <span class="rocket-prod-shipping-price"></span>
       </div>
     </div>
     <div class="general-prod-order" style="margin-top: 40px">
       <h4>일반배송</h4>
-      <div>ㅇㅇㅇ도착</div>
-      <div class="cart-item-box" style="margin-top: 10px;">
-        <div class="order-item-box">
-          <span class="prod-title">title</span><span>수량 : n개</span>
+      <div th:text="${generalExcept}"></div>
+      <div class="cart-item-box" style="margin-top: 10px;" th:each="product : ${products}" th:unless="${product.rocketShipping}">
+        <div class="order-item-box" th:price="${product.price}" th:count="${product.count}">
+          <span class="prod-title" th:text="${product.productName}"></span>
+          <span th:text="${product.count} + '개'"></span>
+          <span class="prod-before-sale-price" style="text-decoration: line-through"></span>
+          <span class="prod-after-sale-price"></span>
           <span>배송비 : 3000</span>
         </div>
+        <span class="general-prod-shipping-price"></span>
       </div>
     </div>
     <div class="summary" style="margin-top: 40px">
-      <span class="total-prod-price">40000(상품가격) + 3000(배송비) : 40000(총가격)</span>
+      <span class="total-prod-price"></span>
     </div>
     <button class="btn btn-danger" onclick="location.href='/'">취소</button>
-    <button class="btn btn-primary">결제하기</button>
+    <button class="btn btn-primary" onclick="cartOrder()">결제하기</button>
   </div>
 </div>
-<script src="/js/cart.js"></script>
+<script src="/js/order.js"></script>
 </body>
 </html>

@@ -76,4 +76,9 @@ public class CartService {
         cart.setCount(count);
         cartRepository.save(cart);
     }
+
+    public List<CartDetailDto> getCheckedCartProduct(Long userId) {
+        return cartRepository.findByUserIdAndSelected(userId, true).stream()
+            .map(CartDetailDto::of).collect(Collectors.toList());
+    }
 }
