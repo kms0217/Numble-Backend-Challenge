@@ -1,5 +1,6 @@
 package com.coupang.numble.order.dto;
 
+import com.coupang.numble.common.utils.ModelMapperUtils;
 import com.coupang.numble.order.entity.Cart;
 import com.coupang.numble.product.entity.ProductOption;
 import java.time.LocalDate;
@@ -21,15 +22,17 @@ public class CartDetailDto {
     private String optionStr;
     private boolean rocketShipping;
     private LocalDateTime arriveExpected;
+    private boolean goldBox;
+    private boolean selected;
 
     public static CartDetailDto of(Cart cart) {
-        CartDetailDto cartDetailDto = new CartDetailDto();
+        CartDetailDto cartDetailDto = ModelMapperUtils.getModelMapper().map(cart, CartDetailDto.class);
         cartDetailDto.setCartId(cart.getId());
         cartDetailDto.setProductId(cart.getProduct().getId());
         cartDetailDto.setProductName(cart.getProduct().getTitle());
         cartDetailDto.setRocketShipping(cart.getProduct().isRocketShipping());
         cartDetailDto.setPrice(cart.getProduct().getPrice());
-        cartDetailDto.setCount(cart.getCount());
+        cartDetailDto.setGoldBox(cart.getProduct().isGoldBox());
         ProductOption option = cart.getProductOption();
         if (option != null) {
             cartDetailDto.setPrice(option.getPrice());

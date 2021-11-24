@@ -1,11 +1,11 @@
 window.onload = calcPrice;
-const rocketUser = $("#rocketUser").attr("value");
+const rocketUser = JSON.parse($("#rocketUser").attr("value"));
 let rocketShippingPrice = 0;
 let rocketPrice = 0;
 let generalShippingPrice = 0;
 let generalPrice= 0;
 
-function changeCheckBox(prodType, cartId) {
+function changeCheckBox(prodType, cartId, productId) {
   let price_el = $("#price-" + cartId);
   let count_el = $("#input-number-" + cartId);
   if (!$("#check-box-" + cartId).is(':checked')) {
@@ -28,9 +28,13 @@ function changeCheckBox(prodType, cartId) {
     }
   }
   reRenderPrice(prodType);
+  $.ajax({
+    type: "put",
+    url: "/cart/product/" + productId + "/selected",
+  })
 }
 
-function changeCount(prodType, cartId) {
+function changeCount(prodType, cartId, productId) {
   let price_el = $("#price-" + cartId);
   let curr_count = $("#input-number-" + cartId).val();
   let before_count = $("#input-number-" + cartId).attr("keep");
@@ -51,6 +55,10 @@ function changeCount(prodType, cartId) {
     }
     reRenderPrice(prodType);
   }
+  $.ajax({
+    type: "put",
+    url: "/cart/product/" + productId + "/count?count=" + curr_count,
+  })
 }
 
 function reRenderPrice(prodType) {

@@ -34,3 +34,16 @@ function optionChange() {
   if ($(".price-div").attr("type") === "rocket")
     $(".price-div").append((price * 0.95 * 0.9) + " 원")
 }
+
+function order() {
+  const productId = $("#productId").attr("value")
+  const count = $("#count-input").val()
+  let queryParam = "?count=" + count;
+  if ($(".option-form").val === "clothes"){
+    queryParam += "&size=" + $("#size-option").find(':selected').attr('size') ;
+    queryParam += "&color=" + $("#color-option").find(':selected').attr('color');
+  } else {
+    queryParam += "&optionId=" + $("#optionSelect").find(':selected').attr('optionId')
+  }
+  window.location.href = "/order/direct/" + productId + queryParam
+}

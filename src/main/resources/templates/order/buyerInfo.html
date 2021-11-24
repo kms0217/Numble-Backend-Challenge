@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div class="buyer-info" th:fragment="fragment-buyer-info(user)">
+  <h4>구매자 정보</h4>
+  <table>
+    <tbody>
+    <tr>
+      <th scope="row">이름</th>
+      <td th:text="${user.username}"></td>
+    </tr>
+    <tr>
+      <th scope="row">이메일</th>
+      <td th:text="${user.email}"></td>
+    </tr>
+    <tr>
+      <th>휴대폰 번호</th>
+      <td><input class="buyer-phone-number" type="text" th:value="${user.phoneNumber}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</html>

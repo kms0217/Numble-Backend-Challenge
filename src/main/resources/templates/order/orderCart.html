@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="head.html :: fragment-head()"></head>
+<div class="content-container">
+  <div class="content">
+    <h2>주문/결제</h2>
+    <div th:replace="order/buyerInfo.html :: fragment-buyer-info(${user})"></div>
+    <div th:replace="order/receiverInfo.html :: fragment-receiver-info(${user}, ${address})"></div>
+    <div class="rocket-prod-order" style="margin-top: 40px">
+      <h4>로켓배송</h4>
+      <div>ㅇㅇㅇ도착</div>
+      <div class="cart-item-box" style="margin-top: 10px;">
+        <div class="order-item-box">
+          <span class="prod-title">title</span><span>수량 : n개</span>
+          <span>무료배송</span>
+        </div>
+      </div>
+    </div>
+    <div class="general-prod-order" style="margin-top: 40px">
+      <h4>일반배송</h4>
+      <div>ㅇㅇㅇ도착</div>
+      <div class="cart-item-box" style="margin-top: 10px;">
+        <div class="order-item-box">
+          <span class="prod-title">title</span><span>수량 : n개</span>
+          <span>배송비 : 3000</span>
+        </div>
+      </div>
+    </div>
+    <div class="summary" style="margin-top: 40px">
+      <span class="total-prod-price">40000(상품가격) + 3000(배송비) : 40000(총가격)</span>
+    </div>
+    <button class="btn btn-danger" onclick="location.href='/'">취소</button>
+    <button class="btn btn-primary">결제하기</button>
+  </div>
+</div>
+<script src="/js/cart.js"></script>
+</body>
+</html>

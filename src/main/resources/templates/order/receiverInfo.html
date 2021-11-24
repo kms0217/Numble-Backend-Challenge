@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div class="receiver-info" style="margin-top: 40px"
+     th:fragment="fragment-receiver-info(user, address)">
+  <h4 style="display: inline;">받는사람정보</h4>
+  <button>배송지변경</button>
+  <table th:if="${address} != null" class="address" th:addressId="${address.id}">
+    <tbody>
+    <tr>
+      <th scope="row">이름<span th:if="${user.rocketMembership}"
+                              class="rocket-wow">로켓와우 가능</span><span
+          class="default-address" th:if="${address.main}">기본배송지</span></th>
+      <td th:text="${address.receiverName}"></td>
+    </tr>
+    <tr>
+      <th scope="row">배송주소</th>
+      <td th:text="${address.address}"></td>
+    </tr>
+    <tr>
+      <th>연락처</th>
+      <td th:value="${address.telephone}"></td>
+    </tr>
+    <tr>
+      <th>배송 요청사항</th>
+      <td th:text="${address.place}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <div th:unless="${address} != null">
+    주소지 정보가 없습니다.
+  </div>
+</div>
+</html>

@@ -10,14 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MyCoupangController {
 
-    @GetMapping("/order/list")
-    public String mcOrderList(Model model, @AuthenticationPrincipal Principal principal) {
-        if (principal != null)
-            model.addAttribute("user", UserResDto.of(principal.getUser()));
-        model.addAttribute("mcPage", "orderList");
-        return "mycoupang/order/orderList";
-    }
-
     @GetMapping("/coupon")
     public String mcCouponForm(Model model, @AuthenticationPrincipal Principal principal) {
         if (principal != null)

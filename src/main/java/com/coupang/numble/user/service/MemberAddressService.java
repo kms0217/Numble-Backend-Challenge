@@ -60,6 +60,14 @@ public class MemberAddressService {
         repository.save(memberAddress);
     }
 
+    public MemberAddressDto getMainAddress(User user) {
+        MemberAddress memberAddress = repository.findByUserIdAndMain(user.getId(), true)
+            .orElse(null);
+        if (memberAddress == null)
+            return null;
+        return MemberAddressDto.of(memberAddress);
+    }
+
     public void deleteAddress(User user, Long addressId) {
         repository.deleteByIdAndUserId(addressId, user.getId());
     }

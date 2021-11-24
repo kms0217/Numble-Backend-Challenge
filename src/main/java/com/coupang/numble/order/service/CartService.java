@@ -64,4 +64,16 @@ public class CartService {
     public void deleteCart(Long userId, Long cartId) {
         cartRepository.deleteByIdAndUserId(cartId, userId);
     }
+
+    public void toggleCartItemSelected(Long productId, Long userId) {
+        Cart cart = cartRepository.findByProductIdAndUserId(productId, userId);
+        cart.setSelected(!cart.isSelected());
+        cartRepository.save(cart);
+    }
+
+    public void changeCartItemCount(Long productId, int count, Long userId) {
+        Cart cart = cartRepository.findByProductIdAndUserId(productId, userId);
+        cart.setCount(count);
+        cartRepository.save(cart);
+    }
 }

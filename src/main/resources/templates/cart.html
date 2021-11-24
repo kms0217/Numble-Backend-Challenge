@@ -12,12 +12,19 @@
         <th:block th:each="item : ${cartItems}">
           <div th:if="${item.rocketShipping}" class="cart-item-box"
                th:id="'item-box-' + ${item.cartId}">
-            <input type="checkbox" class="prod-checkbox" th:id="'check-box-' + ${item.cartId}" th:onchange="changeCheckBox('rocket', [[${item.cartId}]])">
+            <input type="checkbox" class="prod-checkbox" th:id="'check-box-' + ${item.cartId}"
+                   th:onchange="changeCheckBox('rocket', [[${item.cartId}]], [[${item.productId}]])" th:checked="${item.selected}">
             <span class="prod-title" th:text="${item.productName}"></span>
             <div th:text="'도착 예정 시간 : ' + ${item.arriveExpected}"></div>
-            <div class="prod-price" th:text="'가격' + ${item.price}" th:id="'price-' + ${item.cartId}" th:value="${item.price}"></div>
-            <input type="number" class="prod-number" min="1" th:value="${item.count}" th:id="'input-number-' + ${item.cartId}" style="width: 60px" th:onchange="changeCount('rocket', [[${item.cartId}]])" th:keep="${item.count}">
-            <button class="btn btn-danger" style="font-size: 14px" th:onclick="deleteCart([[${item.cartId}]])">삭제</button>
+            <div class="prod-price" th:if="${user.rocketMembership} && ${item.goldBox}" th:value="${item.price * 0.95 * 0.9}"></div>
+            <div class="prod-price" th:unless="${user.rocketMembership} && ${item.goldBox}" th:value="${item.price * 0.95}"></div>
+            <input type="number" class="prod-number" min="1" th:value="${item.count}"
+                   th:id="'input-number-' + ${item.cartId}" style="width: 60px"
+                   th:onchange="changeCount('rocket', [[${item.cartId}]], [[${item.productId}]])"
+                   th:keep="${item.count}">
+            <button class="btn btn-danger" style="font-size: 14px"
+                    th:onclick="deleteCart([[${item.cartId}]])">삭제
+            </button>
           </div>
         </th:block>
       </div>
@@ -29,26 +36,34 @@
         <th:block th:each="item : ${cartItems}">
           <div th:if="!${item.rocketShipping}" class="cart-item-box"
                th:id="'item-box-' + ${item.cartId}">
-            <input class="prod-checkbox" type="checkbox" th:id="'check-box-' + ${item.cartId}" th:onchange="changeCheckBox('general', [[${item.cartId}]])">
+            <input class="prod-checkbox" type="checkbox" th:id="'check-box-' + ${item.cartId}"
+                   th:onchange="changeCheckBox('general', [[${item.cartId}]], [[${item.productId}]])" th:checked="${item.selected}">
             <span class="prod-title" th:text="${item.productName}"></span>
             <div th:text="'도착 예정 시간 : ' + ${item.arriveExpected}"></div>
-            <div class="prod-price" th:text="'가격' + ${item.price}" th:id="'price-' + ${item.cartId}" th:value="${item.price}"></div>
-            <input type="number" class="prod-number" min="1" th:value="${item.count}" th:id="'input-number-' + ${item.cartId}" style="width: 60px" th:onchange="changeCount('general', [[${item.cartId}]])" th:keep="${item.count}">
-            <button class="btn btn-danger" style="font-size: 14px" th:onclick="deleteCart([[${item.cartId}]])">삭제</button>
+            <div class="prod-price" th:text="'가격' + ${item.price}" th:id="'price-' + ${item.cartId}"
+                 th:value="${item.price}"></div>
+            <input type="number" class="prod-number" min="1" th:value="${item.count}"
+                   th:id="'input-number-' + ${item.cartId}" style="width: 60px"
+                   th:onchange="changeCount('general', [[${item.cartId}]], [[${item.productId}]])"
+                   th:keep="${item.count}">
+            <button class="btn btn-danger" style="font-size: 14px"
+                    th:onclick="deleteCart([[${item.cartId}]])">삭제
+            </button>
           </div>
         </th:block>
+      </div>
+      <div class="summary">
+        <div id="summary-price"></div>
+        <div id="summary-delivery-price"></div>
+        <div id="summary-final-price"></div>
+      </div>
+      <button class="btn btn-default" style="border: 2px solid #0074e9" onclick="location.href='/'">
+        계속
+        쇼핑하기
+      </button>
+      <button class="btn btn-primary" onclick="location.href='/cart'">주문하기</button>
     </div>
-    <div class="summary">
-      <div id="summary-price"></div>
-      <div id="summary-delivery-price"></div>
-      <div id="summary-final-price"></div>
-    </div>
-    <button class="btn btn-default" style="border: 2px solid #0074e9" onclick="location.href='/'">계속
-      쇼핑하기
-    </button>
-    <button class="btn btn-primary" onclick="location.href='/'">주문하기</button>
   </div>
-</div>
 </div>
 <script src="/js/cart.js"></script>
 </body>

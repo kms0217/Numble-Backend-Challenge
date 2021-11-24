@@ -5,82 +5,43 @@
 <div class="content-container" id="rocketUser" th:value="${user.rocketMembership}">
   <div class="content">
     <h2>주문/결제</h2>
-    <div class="buyer-info">
-      <h4>구매자 정보</h4>
-      <table>
-        <tbody>
-        <tr>
-          <th scope="row">이름</th>
-          <td th:text="${user.username}"></td>
-        </tr>
-        <tr>
-          <th scope="row">이메일</th>
-          <td th:text="${user.email}"></td>
-        </tr>
-        <tr>
-          <th>휴대폰 번호</th>
-          <td><input class="buyer-phone-number" type="text" th:value="${user.phoneNumber}"></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="receiver-info" style="margin-top: 40px">
-      <h4 style="display: inline;">받는사람정보</h4>
-      <button>배송지변경</button>
-      <table th:if="${address} != null">
-        <tbody>
-        <tr>
-          <th scope="row">이름<span th:if="${user.rocketMembership}" class="rocket-wow">로켓와우 가능</span><span
-              class="default-address" th:if="${address.main}">기본배송지</span></th>
-          <td th:text="${address.receiverName}"></td>
-        </tr>
-        <tr>
-          <th scope="row">배송주소</th>
-          <td th:text="${address.address}"></td>
-        </tr>
-        <tr>
-          <th>연락처</th>
-          <td><input class="buyer-phone-number" type="text" th:value="${address.telephone}"></td>
-        </tr>
-        <tr>
-          <th>배송 요청사항</th>
-          <td th:text="${address.place}"></td>
-        </tr>
-        </tbody>
-      </table>
-      <div th:unless="${address} != null">
-        주소지 정보가 없습니다.
-      </div>
-    </div>
-    <div class="rocket-prod-order" style="margin-top: 40px">
+    <div th:replace="order/buyerInfo.html :: fragment-buyer-info(${user})"></div>
+    <div th:replace="order/receiverInfo.html :: fragment-receiver-info(${user}, ${address})"></div>
+    <div class="rocket-prod-order" style="margin-top: 40px" th:if="${product.rocketShipping}">
       <h4>로켓배송</h4>
-      <div>ㅇㅇㅇ도착</div>
+      <div th:text="${rocketExcept}"></div>
       <div class="cart-item-box" style="margin-top: 10px;">
-          <div class="order-item-box">
-            <span class="prod-title">title</span><span>수량 : n개</span>
-            <span>무료배송</span>
-          </div>
+        <div class="order-item-box" th:price="${product.price}" th:goldBox="${product.goldBox}" th:count="${count}">
+          <span class="prod-title" th:text="${product.title}"></span>
+          <span class="prod-before-sale-price" style="text-decoration: line-through"></span>
+          <span class="prod-after-sale-price"></span>
+        </div>
+        <span class="rocket-prod-shipping-price"></span>
       </div>
     </div>
-    <div class="general-prod-order" style="margin-top: 40px">
+    <div class="general-prod-order" style="margin-top: 40px" th:unless="${product.rocketShipping}">
       <h4>일반배송</h4>
-      <div>ㅇㅇㅇ도착</div>
+      <div th:text="${generalExcept}"></div>
       <div class="cart-item-box" style="margin-top: 10px;">
         <div class="order-item-box">
-          <span class="prod-title">title</span><span>수량 : n개</span>
+          <span class="prod-title" th:text="${product.title}"></span>
+          <span th:text="${count} + '개'"></span>
+          <span class="prod-before-sale-price"></span>
+          <span class="prod-after-sale-price"></span>
+          <span class="prod-shipping-price"></span>
           <span>배송비 : 3000</span>
         </div>
+        <span class="general-prod-shipping-price"></span>
       </div>
     </div>
     <div class="summary" style="margin-top: 40px">
-      <span class="total-prod-price">40000(상품가격) + 3000(배송비) : 40000(총가격)</span>
+      <span class="total-prod-price"></span>
     </div>
     <button class="btn btn-danger" onclick="location.href='/'">취소</button>
-    <button class="btn btn-primary">결제하기</button>
+    <button class="btn btn-primary" th:onclick="orderReq([[${count}]], [[${product.id}]])">결제하기
+    </button>
   </div>
 </div>
-
-</div>
-<script src="/js/cart.js"></script>
+<script src="/js/order.js"></script>
 </body>
 </html>
