@@ -21,7 +21,10 @@ spring:
       cache: false
       check-template-location: true
       suffix: .html
-
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
 server:
   port: 9091
 
@@ -38,7 +41,7 @@ spring:
       enabled: true
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:

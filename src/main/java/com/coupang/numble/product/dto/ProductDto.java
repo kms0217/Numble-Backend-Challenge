@@ -20,7 +20,7 @@ public class ProductDto {
 
     public static ProductDto of(Product product) {
         ProductDto productDto = ModelMapperUtils.getModelMapper().map(product, ProductDto.class);
-        productDto.thumbnailUrl = product.getThumbnailUrls().iterator().next().getThumbnailUrl();
+        productDto.thumbnailUrl = product.getThumbnailUrls().get(0).getThumbnailUrl();
         return productDto;
     }
 }

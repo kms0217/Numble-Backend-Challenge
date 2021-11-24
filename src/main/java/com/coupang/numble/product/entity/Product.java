@@ -1,7 +1,9 @@
 package com.coupang.numble.product.entity;
 
 import com.coupang.numble.common.entity.Base;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,13 +43,7 @@ public class Product extends Base {
     private Set<ClothesOption> clothesOptions = new HashSet<>();
 
     @OneToMany(mappedBy = "product")
-    private Set<ProductImage> thumbnailUrls = new HashSet<>();
-
-    @Formula("(select count(1) from review r where r.product_id = id)")
-    private int reviewNum;
-
-    @Formula("(select AVG(r.star) from review r where r.product_id = id)")
-    private int starRate;
+    private List<ProductImage> thumbnailUrls = new ArrayList<>();
 
     String title;
     Integer price;
