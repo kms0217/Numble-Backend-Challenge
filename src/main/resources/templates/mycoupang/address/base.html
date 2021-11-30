@@ -19,13 +19,13 @@
     <div class="main-content-container">
       <th:block th:switch="${addressPage}">
         <th:block th:case="'main'">
-          <div th:replace="/mycoupang/address/addressMain.html :: fragment-addressMain(${user}, ${addressList})"></div>
+          <div th:replace="mycoupang/address/addressMain.html :: fragment-addressMain(${user}, ${addressList})"></div>
         </th:block>
         <th:block th:case="'edit'">
-          <div th:replace="/mycoupang/address/addressEdit.html :: fragment-addressEdit(${user}, ${address})"></div>
+          <div th:replace="mycoupang/address/addressEdit.html :: fragment-addressEdit(${user}, ${address})"></div>
         </th:block>
         <th:block th:case="'add'">
-          <div th:replace="/mycoupang/address/addressAdd.html :: fragment-addressAdd(${addressDto})"></div>
+          <div th:replace="mycoupang/address/addressAdd.html :: fragment-addressAdd(${addressDto})"></div>
         </th:block>
       </th:block>
     </div>
